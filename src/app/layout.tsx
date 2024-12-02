@@ -1,3 +1,4 @@
+import { Layout, Main } from "@/components/ui/craft";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "./globals.css";
@@ -24,12 +25,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <Layout>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Main>{children}</Main>
       </body>
-    </html>
+    </Layout>
   );
 }
