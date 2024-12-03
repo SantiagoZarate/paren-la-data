@@ -1,5 +1,6 @@
 "use client";
 
+import { getCurrentAge } from "@/lib/getCurrentAge";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
 import {
   Button,
@@ -14,7 +15,7 @@ import {
 } from "@nextui-org/react";
 import { SearchIcon } from "lucide-react";
 import React from "react";
-import { ColumnKey, columns } from "./data";
+import { columns } from "./data";
 
 interface Props {
   guests: PeopleTeamsOccuparionsDTO[];
@@ -42,7 +43,7 @@ export default function PeopleTable({ guests }: Props) {
     }
 
     return filteredUsers;
-  }, [guests, filterValue]);
+  }, [guests, hasSearchFilter, filterValue]);
 
   const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
@@ -64,12 +65,18 @@ export default function PeopleTable({ guests }: Props) {
   }, [sortDescriptor, items]);
 
   const renderCell = React.useCallback(
-    (user: PeopleTeamsOccuparionsDTO, columnKey: ColumnKey) => {
+    (
+      user: PeopleTeamsOccuparionsDTO,
+      columnKey: keyof PeopleTeamsOccuparionsDTO
+    ) => {
       const cellValue = user[columnKey];
 
       switch (columnKey) {
         case "name":
           return <p>{cellValue}</p>;
+        case "birthDate":
+          const age = getCurrentAge(cellValue as string);
+          return <p>{String(age) === "NaN" ? "?" : age}</p>;
         case "teams":
           return (
             <ul className="flex gap-1 list-none">
@@ -183,10 +190,10 @@ export default function PeopleTable({ guests }: Props) {
     );
   }, [
     filterValue,
-    onRowsPerPageChange,
-    guests.length,
     onSearchChange,
-    hasSearchFilter,
+    guests.length,
+    onRowsPerPageChange,
+    onClear,
   ]);
 
   const bottomContent = React.useMemo(() => {
@@ -221,17 +228,13 @@ export default function PeopleTable({ guests }: Props) {
         </div>
       </div>
     );
-  }, [selectedKeys, items.length, page, pages, hasSearchFilter]);
+  }, [page, pages, onPreviousPage, onNextPage]);
 
   return (
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
-      isHeaderSticky
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
-      classNames={{
-        wrapper: "max-h-[382px]",
-      }}
       selectedKeys={selectedKeys}
       sortDescriptor={sortDescriptor}
       topContent={topContent}

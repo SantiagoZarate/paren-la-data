@@ -18,8 +18,8 @@ export async function parseGuest(url: string) {
     .map((row) => {
       const [
         name,
-        birthDate,
         appearanceDate,
+        birthDate,
         _age,
         occupations,
         location,
@@ -60,7 +60,7 @@ export async function parseStaff(url: string) {
     .split("\n")
     .slice(1)
     .map((row) => {
-      const [name, birthDate, _age, occupations, location, country, teams] =
+      const [name, _age, birthDate, occupations, location, country, teams] =
         row.split(",");
 
       const parsedOccupations =
