@@ -1,6 +1,12 @@
 import { Container, Section } from "@/components/ui/craft";
 
-export default function RootPage() {
+export default async function RootPage() {
+  const csv = await fetch(
+    "http://localhost:3000/public/invitados-paren-la-mano.csv"
+  ).then((res) => res.text());
+
+  console.log(csv);
+
   return (
     <Section>
       <Container>
