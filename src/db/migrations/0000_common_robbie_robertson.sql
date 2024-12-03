@@ -13,7 +13,6 @@ CREATE TABLE `people` (
 	`id` text PRIMARY KEY NOT NULL,
 	`name` text NOT NULL,
 	`birth_date` text NOT NULL,
-	`job` text,
 	`location` text,
 	`country` text,
 	`type` text

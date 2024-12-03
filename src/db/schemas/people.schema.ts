@@ -9,7 +9,6 @@ export const people = sqliteTable("people", {
     .$defaultFn(() => nanoid()),
   name: text("name").notNull(),
   birthDate: text("birth_date").notNull(),
-  job: text("job"),
   location: text("location"),
   country: text("country"),
   type: text("type"),

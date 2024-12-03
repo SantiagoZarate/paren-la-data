@@ -1,7 +1,7 @@
 {
   "version": "6",
   "dialect": "sqlite",
-  "id": "ecae3861-a456-4ebc-87a1-6330e048e853",
+  "id": "1d4e34b3-a8ff-40ab-b6b0-e72954558582",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "guest_appearance": {
@@ -88,13 +88,6 @@
           "type": "text",
           "primaryKey": false,
           "notNull": true,
-          "autoincrement": false
-        },
-        "job": {
-          "name": "job",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
           "autoincrement": false
         },
         "location": {
