@@ -1,12 +1,19 @@
 import { z } from "zod";
 
-export const bancaFijaSchema = z.object({
+export const peopleSchema = z.object({
   name: z.string().trim(),
   birthDate: z.string().trim(),
-  age: z.coerce.number(),
-  job: z.string().trim(),
-  team: z.string().trim(),
+  appearanceDate: z.string().trim(),
   location: z.string().trim(),
+  team: z.array(z.string().trim()),
+  country: z.string().trim(),
+  occupations: z.array(z.string()),
 });
 
-export type BancaFijaSchema = z.infer<typeof bancaFijaSchema>;
+export type PeopleCSVScheam = z.infer<typeof peopleSchema>;
+
+export const staffSchema = peopleSchema.omit({
+  appearanceDate: true,
+});
+
+export type StaffSchema = z.infer<typeof staffSchema>;
