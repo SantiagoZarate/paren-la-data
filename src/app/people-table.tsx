@@ -242,6 +242,7 @@ export default function PeopleTable({ guests }: Props) {
       onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
       classNames={{
+        table: "m-0",
         thead: "border-none",
         wrapper: "p-0 shadow-none",
         td: "p-0 xl:p-0 m-0  *:m-2",

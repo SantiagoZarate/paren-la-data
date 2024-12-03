@@ -1,4 +1,6 @@
+import { Header } from "@/components/common/header/header";
 import { Layout, Main } from "@/components/ui/craft";
+import { ThemeProvider } from "@/provider/ThemeProvider";
 import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
@@ -27,12 +29,18 @@ export default function RootLayout({
 }>) {
   return (
     <Layout>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
-        <NextUIProvider>
-          <Main>{children}</Main>
-        </NextUIProvider>
+      <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <NextUIProvider>
+            <Header />
+            <Main>{children}</Main>
+          </NextUIProvider>
+        </ThemeProvider>
       </body>
     </Layout>
   );

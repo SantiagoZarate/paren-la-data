@@ -1,8 +1,8 @@
 // craft-ds, v0.2.8
 // This is a design system for building responsive layouts in React
 
-import React from "react";
 import { type ClassValue, clsx } from "clsx";
+import React from "react";
 import { twMerge } from "tailwind-merge";
 
 // Utility function to merge class names using clsx and tailwind-merge
@@ -259,7 +259,7 @@ const Box = ({
 
 // Exporting all components for use in other parts of the application
 
-export { Layout, Main, Section, Container, Article, Box };
+export { Article, Box, Container, Layout, Main, Section };
 
 // Instructions for AI
 
