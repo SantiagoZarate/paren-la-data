@@ -1,10 +1,10 @@
 Nombre                     ,Fecha      ,Nacimiento ,Edad ,Ocupación                       ,Lugar de Nacimiento         ,Pais      ,Hincha de
 Coscu                      ,3/4/2022   ,8/3/1991   ,33   ,Streamer                        ,La Plata                    ,Argentina,Racing
 Luis Ventura               ,3/11/2022  ,1/14/1956  ,68   ,Periodista / Director Técnico   ,São Paulo                   ,Brasil    ,Lanús
-Gordo Ventilador           ,3/14/2022  ,?          ,?    ,Animador / Influencer           ,?                           ,Argentina,San Lorenz
+Gordo Ventilador           ,3/14/2022  ,?          ,?    ,Animador / Influencer           ,?                           ,Argentina,San Lorenzo
 Lucas Pratto               ,3/16/2022  ,6/4/1989   ,35   ,Futbolista                      ,La Plata                    ,Argentina,Boca / Vélez
 Nazareno Casero            ,3/18/2022  ,6/19/1986  ,38   ,Actor                           ,Luis Piedrabuena            ,Argentina,Comunicaciones
-Ariel Mantelman            ,3/21/2022  ,4/19/1990  ,34   ,Twittero                        ,?                           ,Argentina,River Plate
+Ariel Mantelman            ,3/21/2022  ,4/19/1990  ,34   ,Twitter                        ,?                           ,Argentina,River Plate
 Fernanda Metilli           ,3/22/2022  ,6/13/1984  ,40   ,Comediante / Actriz             ,Tandil                      ,Argentina,Boca Juniors
 FMK                        ,3/25/2022  ,1/27/1999  ,25   ,Cantante                        ,Necochea                    ,Argentina,River Plate
 El Demente                 ,3/25/2022  ,12/19/1994 ,29   ,Streamer / Influencer           ,Loma Hermosa                ,Argentina,Boca Juniors           
@@ -20,20 +20,20 @@ Duki                       ,4/28/2022  ,6/24/1996  ,28   ,Músico               
 Federico D'elia            ,5/2/2022   ,10/4/1966  ,58   ,Actor                           ,La Plata                    ,Argentina,Estudiantes            
 Manuel Olivari             ,5/3/2022   ,4/1/1985   ,39   ,Periodista Deportivo            ,Palermo                     ,Argentina,Boca Juniors           
 Danny Ocean                ,5/4/2022   ,5/5/1992   ,32   ,Músico                          ,Caracas                     ,Venezuela,?                      
-Palito                     ,5/5/2022   ,14/9/????  ,?    ,Twittero                        ,?                           ,Argentina,Boca Juniors           
+Palito                     ,5/5/2022   ,14/9/????  ,?    ,Twitter                        ,?                           ,Argentina,Boca Juniors           
 Juan Marconi               ,5/6/2022   ,10/17/1987 ,37   ,Periodista / Conductor          ,?                           ,Argentina,Independiente          
 Matias Martin              ,5/11/2022  ,10/27/1970 ,54   ,Periodista Deportivo            ,?                           ,Argentina,River Plate            
-José Montesano             ,5/13/2022  ,1/23/1971  ,53   ,Relator (Basquet y Vóley)       ,Olavarría                   ,Argentina,Boca Juniors           
+José Montesano             ,5/13/2022  ,1/23/1971  ,53   ,Relator                         ,Olavarría                   ,Argentina,Boca Juniors           
 Saramalacara               ,5/16/2022  ,11/8/2000  ,24   ,Músico                          ,CABA                        ,Argentina,San Lorenzo            
 Grego Rosselló             ,5/20/2022  ,8/13/1991  ,33   ,Actor / Conductor               ,Palermo                     ,Argentina,River Plate            
 Unicornio                  ,5/24/2022  ,6/7/1999   ,25   ,Streamer                        ,Villa Crespo                ,Argentina,Boca Juniors           
-Topa                       ,5/26/2022  ,10/11/1975 ,49   ,Actor / Animador                ,Caseros                     ,Argentina,Chicago / Boca         
+Topa                       ,5/26/2022  ,10/11/1975 ,49   ,Actor / Animador                ,Caseros                     ,Argentina,Chicago / Boca Juniors        
 BB Asul                    ,5/27/2022  ,6/26/1997  ,27   ,Músico                          ,?                           ,Argentina,Boca Juniors           
 Migue Granados             ,5/30/2022  ,9/2/1986   ,38   ,Comediante / Productor          ,Rosario                     ,Argentina,Newell's Old Boys      
 Mono de Kapanga            ,6/2/2022   ,4/12/1969  ,55   ,Músico                          ,Lomas de Zamora             ,Argentina,Quilmes                
 Agustín Bernasconi (MYA)   ,6/6/2022   ,10/15/1996 ,28   ,Actor / Músico                  ,"Rio Tercero, Córdoba"      ,Argentina,River Plate            
 Máximo Espíndola (MYA)     ,6/6/2022   ,12/3/1994  ,30   ,Actor / Músico                  ,San Miguel de Tucumán       ,Argentina,Atlético Tucumán       
-Nicolás Villalba           ,6/7/2022   ,10/23/1999 ,25   ,Jugador Esports (FIFA)          ,Flores                      ,Argentina,Banfield               
+Nicolás Villalba           ,6/7/2022   ,10/23/1999 ,25   ,Esports                         ,Flores                      ,Argentina,Banfield               
 Facundo Campazzo           ,6/14/2022  ,3/23/1991  ,33   ,Basquetbolista                  ,Córdoba                     ,Argentina,Chacarita              
 Louta                      ,6/16/2022  ,6/22/1994  ,30   ,Músico                          ,CABA                        ,Argentina,?                      
 Davo Xeneize               ,6/24/2022  ,12/4/2002  ,22   ,Streamer                        ,CABA                        ,Argentina,Boca Juniors           
@@ -44,7 +44,7 @@ Sebastián Varela del Río   ,7/7/2022   ,6/11/1987  ,37   ,Periodista          
 Javier Lanza               ,7/7/2022   ,3/12/????  ,?    ,Periodista Deportivo            ,Luis Guillón                ,Argentina,Boca Juniors
 Ima Rodriguez              ,7/11/2022  ,3/5/1996   ,28   ,Actor                           ,?                           ,Argentina,San Lorenzo
 Diego Latorre              ,7/14/2022  ,8/4/1969   ,55   ,Exfutbolista / Comentarista     ,Belgrano                    ,Argentina,Ferro Carril Oeste
-Valentin Torres Erwerle    ,7/15/2022  ,12/8/2004  ,20   ,Semi-Periodista Deportivo       ,?                           ,Argentina,River Plate
+Valentin Torres Erwerle    ,7/15/2022  ,12/8/2004  ,20   ,Periodista Deportivo       ,?                           ,Argentina,River Plate
 Julián Kartun              ,7/18/2022  ,11/7/1983  ,41   ,Actor / Músico / Comediante     ,Villa Crespo                ,Argentina,Atlanta
 Hilda Lizarazu             ,7/19/2022  ,10/12/1963 ,61   ,Música                          ,"Curuzú Cuatiá, Corrientes" ,Argentina,Boca Juniors
 Violeta Urtizberea         ,7/21/2022  ,2/19/1985  ,39   ,Actriz                          ,?                           ,Argentina,Independiente
@@ -52,7 +52,7 @@ Elio Rossi                 ,7/22/2022  ,5/4/1963   ,61   ,Periodista            
 Nicolás Laprovittola       ,7/26/2022  ,1/31/1990  ,34   ,Basquetbolista                  ,Morón                       ,Argentina,Boca Juniors
 Florian                    ,7/28/2022  ,5/11/1995  ,29   ,Músico                          ,Boedo                       ,Argentina,San Lorenzo
 Carlos Maslatón            ,7/29/2022  ,12/19/1958 ,66   ,Abogado / Analista Financiero   ,Villa Santa Rita            ,Argentina,Boca Juniors
-RusherKing                 ,8/4/2022   ,5/20/2000  ,24   ,Músico                          ,Santiago del Estero         ,Argentina,Central Córdoba / Boca
+RusherKing                 ,8/4/2022   ,5/20/2000  ,24   ,Músico                          ,Santiago del Estero         ,Argentina,Central Córdoba / Boca Juniors
 Goycoechea                 ,8/11/2022  ,10/17/1963 ,61   ,Exfutbolista                    ,Zárate                      ,Argentina,River Plate
 Zambayonny                 ,8/12/2022  ,9/8/1973   ,51   ,Músico                          ,CABA                        ,Argentina,Olimpo
 Piti Fernández             ,8/15/2022  ,11/14/1982 ,42   ,Músico                          ,Caballito                   ,Argentina,Huracán
@@ -75,18 +75,18 @@ Nati Carulias              ,10/3/2022  ,10/19/1975 ,49   ,Comediante            
 Leo Gabes                  ,10/4/2022  ,18/8/????  ,?    ,Periodista Deportivo            ,?                           ,Argentina,All Boys
 Adrián Lacroix             ,10/5/2022  ,?          ,?    ,Mago                            ,?                           ,Argentina,?
 Cae                        ,10/6/2022  ,10/20/1969 ,55   ,Músico                          ,Caballito                   ,Argentina,Independiente
-Paulina Cocina             ,10/13/2022 ,7/22/1976  ,48   ,Cocinera / Influencer           ,Quilmes                     ,Argentina,Independiente
+Paulina Cocina             ,10/13/2022 ,7/22/1976  ,48   ,Cocinerx / Influencer           ,Quilmes                     ,Argentina,Independiente
 José María Listorti        ,10/14/2022 ,3/4/1973   ,51   ,Comediante / Conductor          ,Turdera                     ,Argentina,River Plate
 Juan Carlos Baglietto      ,10/18/2022 ,6/14/1955  ,69   ,Músico                          ,Rosario                     ,Argentina,Rosario Central
 El Bananero                ,10/20/2022 ,9/12/1976  ,48   ,Comediante / Influencer         ,Nueva Jersey                ,EE.UU    ,Nacional
 Sergio Massa               ,10/21/2022 ,4/28/1972  ,52   ,Político                        ,San Martín                  ,Argentina,Tigre
 Roberto Moldavsky          ,10/26/2022 ,9/12/1962  ,62   ,Comediante / Escritor           ,Once                        ,Argentina,Boca Juniors
 Mariano Llinás             ,10/27/2022 ,2/10/1975  ,49   ,Director de Cine                ,?                           ,Argentina,Boca Juniors
-Pablo Giralt               ,10/28/2022 ,4/5/1974   ,50   ,Relator (Fútbol)                ,Venado Tuerto               ,Argentina,River Plate
+Pablo Giralt               ,10/28/2022 ,4/5/1974   ,50   ,Relator                         ,Venado Tuerto               ,Argentina,River Plate
 Felipe Pigna               ,11/2/2022  ,5/29/1959  ,65   ,Historiador                     ,Mercedes                    ,Argentina,Independiente
 Gastón Edul                ,11/3/2022  ,12/31/1994 ,30   ,Periodista Deportivo            ,San Cristóbal               ,Argentina,Independiente
 José Chatruc               ,11/7/2022  ,11/9/1976  ,48   ,Exfutbolista                    ,Bolívar                     ,Argentina,Boca Juniors
 Martín Garabal             ,11/10/2022 ,11/7/1983  ,41   ,Comediante / Actor              ,CABA                        ,Argentina,?
 Fede Bareiro               ,11/11/2022 ,3/1/????   ,?    ,Periodista                      ,?                           ,Argentina,Vélez
 Ruben Darío Insúa          ,11/16/2022 ,4/17/1961  ,63   ,Exfutbolista / Director Técnico ,Parque Chacabuco            ,Argentina,San Lorenzo
-Luken                      ,11/17/2022 ,3/25/1997  ,25   ,Jugador Esports (Counter)       ,?                           ,Argentina,Boca Juniors
+Luken                      ,11/17/2022 ,3/25/1997  ,25   ,Esports                         ,?                           ,Argentina,Boca Juniors
