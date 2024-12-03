@@ -35,4 +35,4 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 
-src/db/local.development.db
+/src/db/local.development.db
