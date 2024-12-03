@@ -4,8 +4,6 @@ import envs from "./envs";
 
 let dbCredentials: Config;
 
-console.log({ __dirname });
-
 if (envs.mode === "production") {
   dbCredentials = {
     url: envs.db.url,
@@ -13,7 +11,10 @@ if (envs.mode === "production") {
   };
 } else {
   dbCredentials = {
-    url: `file:${path.resolve(__dirname + `/../db/local.${envs.mode}.db`)}`,
+    url: `file:${path.resolve(
+      __dirname,
+      `../../../src/db/local.${envs.mode}.db`
+    )}`,
   };
 }
 
