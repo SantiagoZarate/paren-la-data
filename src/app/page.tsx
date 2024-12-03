@@ -1,4 +1,5 @@
 import { Container, Section } from "@/components/ui/craft";
+import { BancaFijaSchema, bancaFijaSchema } from "@/lib/zod/csv-validation";
 
 export default async function RootPage() {
   const csv = await fetch("http://localhost:3000/csv/banca-fija.csv").then(
@@ -9,16 +10,16 @@ export default async function RootPage() {
     .split("\n")
     .slice(1)
     .map((row) => {
-      const [name, birthDate, age, profession, location, team] = row.split(",");
+      const [name, birthDate, age, job, location, team] = row.split(",");
 
-      return {
-        name,
+      return bancaFijaSchema.parse({
+        age: Number(age),
         birthDate,
-        age,
-        profession,
+        job,
+        name,
         location,
         team,
-      };
+      } satisfies BancaFijaSchema);
     });
 
   console.log({ miembros });
