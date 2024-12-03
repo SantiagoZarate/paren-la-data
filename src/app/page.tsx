@@ -12,7 +12,7 @@ export default async function RootPage() {
       teams: true,
       occupations: true,
     },
-    limit: 5,
+    limit: 50,
   });
 
   const parsedGuests = guests.map((n) =>

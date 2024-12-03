@@ -241,6 +241,11 @@ export default function PeopleTable({ guests }: Props) {
       topContentPlacement="outside"
       onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
+      classNames={{
+        thead: "border-none",
+        wrapper: "p-0 shadow-none",
+        td: "p-0 xl:p-0 m-0  *:m-2",
+      }}
     >
       <TableHeader columns={columns}>
         {(column) => (

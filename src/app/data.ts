@@ -1,7 +1,7 @@
 const columns = [
-  { name: "NAME", uid: "name", sortable: true },
-  { name: "AGE", uid: "birthDate", sortable: true },
-  { name: "TEAM", uid: "teams" },
+  { name: "Nombre", uid: "name", sortable: true },
+  { name: "Edad", uid: "birthDate", sortable: true },
+  { name: "Hincha de", uid: "teams" },
 ] as const; // Use `as const` to make it readonly and preserve literal types
 
 export { columns };
