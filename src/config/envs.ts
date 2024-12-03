@@ -15,8 +15,8 @@ const envsSchema = z.object({
 
 export default envsSchema.parse({
   db: {
-    token: process.env.DB_TOKEN,
-    url: process.env.DB_URL,
+    token: process.env.DB_TOKEN || "",
+    url: process.env.DB_URL || "",
   },
-  mode: process.env.NODE_ENV,
+  mode: process.env.NODE_ENV || "development",
 });

@@ -1,7 +1,10 @@
 import { Config } from "@libsql/client";
+import path from "node:path";
 import envs from "./envs";
 
 let dbCredentials: Config;
+
+console.log({ __dirname });
 
 if (envs.mode === "production") {
   dbCredentials = {
@@ -10,7 +13,7 @@ if (envs.mode === "production") {
   };
 } else {
   dbCredentials = {
-    url: `file:../db/local.${envs.mode}.db`,
+    url: `file:${path.resolve(__dirname + `/../db/local.${envs.mode}.db`)}`,
   };
 }
 

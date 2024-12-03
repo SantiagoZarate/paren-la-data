@@ -5,7 +5,7 @@ export const peopleSchema = z.object({
   birthDate: z.string().trim(),
   appearanceDate: z.string().trim(),
   location: z.string().trim(),
-  team: z.array(z.string().trim()),
+  teams: z.array(z.string().trim()),
   country: z.string().trim(),
   occupations: z.array(z.string()),
 });

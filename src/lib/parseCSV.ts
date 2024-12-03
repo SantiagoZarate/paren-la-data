@@ -34,7 +34,7 @@ export async function parseGuest(url: string) {
 
       return peopleSchema.parse({
         occupations: parsedOccupations,
-        team: parsedTeams,
+        teams: parsedTeams,
         appearanceDate,
         birthDate,
         location,

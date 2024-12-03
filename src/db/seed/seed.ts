@@ -1,13 +1,72 @@
 import { parseGuest } from "@/lib/parseCSV";
+import { db } from "..";
+import {
+  occupation,
+  people,
+  peopleToOccupations,
+  peopleToTeams,
+  team,
+} from "../schemas";
 
 async function seed() {
-  // await db.delete(people);
-  // await db.delete(people);
+  await db.delete(people);
+  await db.delete(team);
+  await db.delete(occupation);
+  await db.delete(peopleToOccupations);
+  await db.delete(peopleToTeams);
 
   const invitados2022 = await parseGuest("invitados-2022.csv");
   const invitados2023 = await parseGuest("invitados-2023.csv");
   const invitados2024 = await parseGuest("invitados-2024.csv");
-  // console.log({ invitados2022 });
+
+  const allGuests = [...invitados2022, ...invitados2023, ...invitados2024];
+
+  // Collect all teams
+  const allTeams = allGuests.flatMap((guest) => guest.teams);
+  const uniqueTeams = Array.from(new Set(allTeams)); // Remove duplicates
+
+  console.log({ uniqueTeams });
+
+  // Collect all occupations
+  const allOccupations = allGuests.flatMap((guest) => guest.occupations);
+  const uniqueOccupations = Array.from(new Set(allOccupations)); // Remove duplicates
+
+  // Insert teams
+  await db.insert(team).values(uniqueTeams.map((n) => ({ name: n })));
+
+  // Insert occupation
+  await db
+    .insert(occupation)
+    .values(uniqueOccupations.map((n) => ({ name: n })));
+
+  await Promise.all(
+    allGuests.map(async (guest) => {
+      const newGuest = await db
+        .insert(people)
+        .values({
+          birthDate: guest.birthDate,
+          name: guest.country,
+          country: guest.country,
+          location: guest.location,
+          type: "invitado",
+        })
+        .returning({ id: people.id });
+
+      const newGuestOccupations = guest.occupations.map((occ) => ({
+        occupationName: occ,
+        peopleId: newGuest[0].id,
+      }));
+
+      await db.insert(peopleToOccupations).values(newGuestOccupations);
+
+      const newGuestTeams = guest.teams.map((team) => ({
+        teamName: team,
+        peopleId: newGuest[0].id,
+      }));
+
+      await db.insert(peopleToTeams).values(newGuestTeams);
+    })
+  );
 }
 
 seed();

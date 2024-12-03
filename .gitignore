@@ -34,4 +34,5 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/src/db/local.development.db
+
+src/db/local.development.db
