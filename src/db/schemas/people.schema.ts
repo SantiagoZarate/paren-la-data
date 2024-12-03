@@ -37,6 +37,7 @@ export const peopleToTeamsRelations = relations(peopleToTeams, ({ one }) => ({
   people: one(people, {
     fields: [peopleToTeams.peopleId],
     references: [people.id],
+    relationName: "peopleTeams",
   }),
   team: one(team, {
     fields: [peopleToTeams.teamName],
@@ -57,8 +58,12 @@ export const guestAppearance = sqliteTable("guest_appearance", {
 
 export const peopleRelations = relations(people, ({ many }) => ({
   appearances: many(guestAppearance),
-  occupations: many(occupation),
-  teams: many(team),
+  occupations: many(peopleToOccupations, {
+    relationName: "peopleOccupations",
+  }),
+  teams: many(peopleToTeams, {
+    relationName: "peopleTeams",
+  }),
 }));
 
 export const occupation = sqliteTable("occupation", {
@@ -77,5 +82,21 @@ export const peopleToOccupations = sqliteTable(
   },
   (t) => ({
     pk: primaryKey({ columns: [t.occupationName, t.peopleId] }),
+  })
+);
+
+export const peopleToOccupationsRelations = relations(
+  peopleToOccupations,
+  ({ one }) => ({
+    people: one(people, {
+      fields: [peopleToOccupations.peopleId],
+      references: [people.id],
+      relationName: "peopleTeams",
+    }),
+    occupation: one(occupation, {
+      fields: [peopleToOccupations.peopleId],
+      references: [occupation.name],
+      relationName: "peopleOccupations",
+    }),
   })
 );

@@ -1,27 +1,37 @@
 import { Container, Section } from "@/components/ui/craft";
 import { db } from "@/db";
 import { people } from "@/db/schemas";
+import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
+import PeopleTable from "./people-table";
 
 export default async function RootPage() {
   const guests = await db.query.people.findMany({
     where: eq(people.type, "invitado"),
+    with: {
+      teams: true,
+      occupations: true,
+    },
+    limit: 5,
   });
+
+  const parsedGuests = guests.map((n) =>
+    peopleTeamsOccupationsSchemaDTO.parse({
+      ...n,
+      teams: n.teams.map((t) => t.teamName),
+    })
+  );
+
+  parsedGuests.forEach((n) => console.log(n.teams));
 
   return (
     <Section>
       <Container>
         <h1>Paren la data</h1>
-        <p>Una nueva forma de ver todo</p>
+        <p>Siempre desde del respeto</p>
       </Container>
       <Container>
-        <ul className="flex flex-col divide-y">
-          {guests.map((guest) => (
-            <li key={guest.id}>
-              <p>{guest.name}</p>
-            </li>
-          ))}
-        </ul>
+        <PeopleTable guests={parsedGuests} />
       </Container>
     </Section>
   );
