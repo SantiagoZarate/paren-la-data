@@ -1,6 +1,7 @@
 import { parseGuest, parseStaff } from "@/lib/parseCSV";
 import { db } from "..";
 import {
+  guestAppearance,
   occupation,
   people,
   peopleToOccupations,
@@ -9,6 +10,7 @@ import {
 } from "../schemas";
 
 async function seed() {
+  await db.delete(guestAppearance);
   await db.delete(people);
   await db.delete(team);
   await db.delete(occupation);
@@ -71,6 +73,11 @@ async function seed() {
       }));
 
       await db.insert(peopleToTeams).values(newGuestTeams);
+
+      await db.insert(guestAppearance).values({
+        date: guest.appearanceDate,
+        peopleId: newGuest[0].id,
+      });
     })
   );
 

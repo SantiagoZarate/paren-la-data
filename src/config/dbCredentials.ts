@@ -13,7 +13,8 @@ if (envs.mode === "production") {
   dbCredentials = {
     url: `file:${path.resolve(
       __dirname,
-      `../../../src/db/local.${envs.mode}.db`
+      // `../../../src/db/local.${envs.mode}.db`
+      `../db/local.${envs.mode}.db`
     )}`,
   };
 }

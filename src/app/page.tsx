@@ -45,6 +45,8 @@ export default async function RootPage() {
     }));
   };
 
+  console.log({ parsedGuests });
+
   return (
     <>
       <Section className="border-b bg-foreground-100">
@@ -57,6 +59,9 @@ export default async function RootPage() {
         <Container>
           <PeopleTable guests={parsedGuests} />
         </Container>
+        {/* <Container>
+          <TotalGuestsChart data={} />
+        </Container> */}
         <Container>
           <BarChart
             chartData={calculateChartData()
