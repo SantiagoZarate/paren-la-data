@@ -13,6 +13,7 @@ export default async function RootPage() {
       occupations: true,
     },
     limit: 50,
+    offset: 150,
   });
 
   const parsedGuests = guests.map((n) =>
