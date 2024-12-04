@@ -25,15 +25,15 @@ export default async function RootPage() {
   );
 
   const calculateChartData = () => {
-    const teamMap: { [key: string]: number } = {};
+    const teamMap: { [key: string]: string[] } = {};
 
     // Iterate through guests
     for (const guest of parsedGuests) {
       for (const team of guest.teams) {
         if (!teamMap[team]) {
-          teamMap[team] = 0;
+          teamMap[team] = []; // Initialize with an empty array if not already initialized
         }
-        teamMap[team] += 1; // Increment guest count for the team
+        teamMap[team] = [...teamMap[team], guest.name];
       }
     }
 
@@ -41,6 +41,7 @@ export default async function RootPage() {
     return Object.entries(teamMap).map(([equipo, invitados]) => ({
       equipo,
       invitados,
+      cantidad: invitados.length,
     }));
   };
 
@@ -59,7 +60,7 @@ export default async function RootPage() {
         <Container>
           <BarChart
             chartData={calculateChartData()
-              .sort((a, b) => b.invitados - a.invitados)
+              .sort((a, b) => b.invitados.length - a.invitados.length)
               .slice(0, 10)}
           />
         </Container>
