@@ -1,6 +1,6 @@
-Name                  ,Date of Birth,Age,Occupation                     ,Location               ,Country   ,Favorite Team      
-Luquitas Rodriguez    ,3/21/1992    ,32 ,Comediante                     ,CABA                   ,Argentina ,Boca Juniors       
-Germán Beder          ,5/24/1983    ,41 ,Periodista Deportivo / Escritor,Bahía Blanca           ,Argentina ,Boca Juniors       
-Alfredo Montés de Oca ,9/17/1980    ,44 ,Periodista Deportivo            ,CABA                  ,Argentina ,Estudiantes        
-Roberto Galati        ,2/20/1984    ,40 ,Comediante                     ,Remedios de Escalada   ,Argentina ,Boca Juniors       
-Joaquín Cavanna       ,4/17/1982    ,42 ,Periodista                     ,Chacarita              ,Argentina ,River Plate
+Name                  ,Date of Birth,Genre  ,Age,Occupation                     ,Location               ,Country   ,Favorite Team      
+Luquitas Rodriguez    ,3/21/1992    ,Hombre ,32 ,Comediante                     ,CABA                   ,Argentina ,Boca Juniors       
+Germán Beder          ,5/24/1983    ,Hombre ,41 ,Periodista Deportivo / Escritor,Bahía Blanca           ,Argentina ,Boca Juniors       
+Alfredo Montés de Oca ,9/17/1980    ,Hombre ,44 ,Periodista Deportivo            ,CABA                  ,Argentina ,Estudiantes        
+Roberto Galati        ,2/20/1984    ,Hombre ,40 ,Comediante                     ,Remedios de Escalada   ,Argentina ,Boca Juniors       
+Joaquín Cavanna       ,4/17/1982    ,Hombre ,42 ,Periodista                     ,Chacarita              ,Argentina ,River Plate

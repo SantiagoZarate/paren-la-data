@@ -12,6 +12,7 @@ export const people = sqliteTable("people", {
   location: text("location"),
   country: text("country"),
   type: text("type"),
+  genre: text("genre").notNull(),
 });
 
 export const team = sqliteTable("team", {

@@ -57,6 +57,7 @@ async function seed() {
           country: guest.country,
           location: guest.location,
           type: "invitado",
+          genre: guest.genre,
         })
         .returning({ id: people.id });
 
@@ -91,6 +92,7 @@ async function seed() {
           country: member.country,
           location: member.location,
           type: "staff",
+          genre: member.genre,
         })
         .returning({ id: people.id });
 
@@ -120,6 +122,7 @@ async function seed() {
           country: member.country,
           location: member.location,
           type: "frecuente",
+          genre: member.genre,
         })
         .returning({ id: people.id });
 

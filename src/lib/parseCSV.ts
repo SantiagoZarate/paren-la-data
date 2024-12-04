@@ -19,6 +19,7 @@ export async function parseGuest(url: string) {
       const [
         name,
         appearanceDate,
+        genre,
         birthDate,
         _age,
         occupations,
@@ -47,6 +48,7 @@ export async function parseGuest(url: string) {
         location,
         country,
         name,
+        genre,
       } satisfies PeopleCSVScheam);
     });
 }
@@ -60,8 +62,16 @@ export async function parseStaff(url: string) {
     .split("\n")
     .slice(1)
     .map((row) => {
-      const [name, _age, birthDate, occupations, location, country, teams] =
-        row.split(",");
+      const [
+        name,
+        birthDate,
+        genre,
+        _age,
+        occupations,
+        location,
+        country,
+        teams,
+      ] = row.split(",");
 
       const parsedOccupations =
         occupations
@@ -82,6 +92,7 @@ export async function parseStaff(url: string) {
         location,
         country,
         name,
+        genre,
       } satisfies StaffSchema);
     });
 }

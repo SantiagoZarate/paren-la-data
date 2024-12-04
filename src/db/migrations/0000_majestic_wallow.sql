@@ -2,7 +2,7 @@ CREATE TABLE `guest_appearance` (
 	`id` text PRIMARY KEY NOT NULL,
 	`date` text NOT NULL,
 	`people_id` text NOT NULL,
-	FOREIGN KEY (`people_id`) REFERENCES `people`(`id`) ON UPDATE no action ON DELETE no action
+	FOREIGN KEY (`people_id`) REFERENCES `people`(`id`) ON UPDATE no action ON DELETE cascade
 );
 --> statement-breakpoint
 CREATE TABLE `occupation` (
@@ -15,7 +15,8 @@ CREATE TABLE `people` (
 	`birth_date` text NOT NULL,
 	`location` text,
 	`country` text,
-	`type` text
+	`type` text,
+	`genre` text NOT NULL
 );
 --> statement-breakpoint
 CREATE TABLE `people_to_occupations` (

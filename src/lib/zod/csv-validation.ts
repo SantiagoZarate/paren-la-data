@@ -12,6 +12,7 @@ export const peopleSchema = z.object({
   teams: z.array(z.string().trim()),
   country: z.string().trim(),
   occupations: z.array(z.string()),
+  genre: z.string().trim(),
 });
 
 export type PeopleCSVScheam = z.infer<typeof peopleSchema>;
