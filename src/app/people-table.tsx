@@ -81,7 +81,7 @@ export default function PeopleTable({ guests }: Props) {
           return <p>{String(age) === "NaN" ? "?" : age}</p>;
         case "teams":
           return (
-            <ul className="flex gap-1 list-none items-center">
+            <ul className="flex gap-1 list-none items-center md:m-0">
               {user.teams.map((team) => (
                 <li
                   className="text-foreground px-2 py-1 rounded-lg w-fit text-xs border border-border bg-foreground-50 flex items-center gap-1"
@@ -93,7 +93,7 @@ export default function PeopleTable({ guests }: Props) {
                       src={`/images/${convertToSlug(team)}.png`}
                       width={8}
                       height={8}
-                      className="w-4 m-0"
+                      className="w-4 m-0 xl:m-0"
                     />
                   )}
                   {team}
@@ -256,7 +256,8 @@ export default function PeopleTable({ guests }: Props) {
         table: "m-0",
         thead: "border-none",
         wrapper: "p-0 shadow-none bg-transparent",
-        td: "p-0 xl:p-0 m-0 *:m-2 px-2",
+        td: "p-0 xl:p-0 m-0 *:m-2 px-2 !h-6",
+        tr: "",
         base: "",
       }}
     >

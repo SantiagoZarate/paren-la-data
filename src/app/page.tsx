@@ -26,14 +26,18 @@ export default async function RootPage() {
   parsedGuests.forEach((n) => console.log(n.teams));
 
   return (
-    <Section>
-      <Container>
-        <h1>Paren la data</h1>
-        <p>Siempre desde del respeto</p>
-      </Container>
-      <Container>
-        <PeopleTable guests={parsedGuests} />
-      </Container>
-    </Section>
+    <>
+      <Section className="border-b bg-foreground-100">
+        <Container>
+          <h1>Paren la data</h1>
+          <p>Siempre desde del respeto</p>
+        </Container>
+      </Section>
+      <Section>
+        <Container>
+          <PeopleTable guests={parsedGuests} />
+        </Container>
+      </Section>
+    </>
   );
 }
