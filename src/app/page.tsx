@@ -3,6 +3,7 @@ import { db } from "@/db";
 import { people } from "@/db/schemas";
 import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
+import { BarChart } from "./BarChart";
 import PeopleTable from "./people-table";
 
 export default async function RootPage() {
@@ -23,7 +24,25 @@ export default async function RootPage() {
     })
   );
 
-  parsedGuests.forEach((n) => console.log(n.teams));
+  const calculateChartData = () => {
+    const teamMap: { [key: string]: number } = {};
+
+    // Iterate through guests
+    for (const guest of parsedGuests) {
+      for (const team of guest.teams) {
+        if (!teamMap[team]) {
+          teamMap[team] = 0;
+        }
+        teamMap[team] += 1; // Increment guest count for the team
+      }
+    }
+
+    // Convert teamMap to chartData array
+    return Object.entries(teamMap).map(([equipo, invitados]) => ({
+      equipo,
+      invitados,
+    }));
+  };
 
   return (
     <>
@@ -36,6 +55,13 @@ export default async function RootPage() {
       <Section>
         <Container>
           <PeopleTable guests={parsedGuests} />
+        </Container>
+        <Container>
+          <BarChart
+            chartData={calculateChartData()
+              .sort((a, b) => b.invitados - a.invitados)
+              .slice(0, 10)}
+          />
         </Container>
       </Section>
     </>
