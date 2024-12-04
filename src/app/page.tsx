@@ -5,6 +5,7 @@ import { guestService } from "@/service/guest.service";
 import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
 import { BarChart } from "./BarChart";
+import { GenderChart } from "./gender-chart";
 import PeopleTable from "./people-table";
 import { TotalGuestsChart } from "./TotalGuestsChart";
 
@@ -63,12 +64,15 @@ export default async function RootPage() {
         <Container>
           <PeopleTable guests={parsedGuests} />
         </Container>
-        <Container>
+        <Container className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
           <TotalGuestsChart
             data={guestsDividedByYears.map((g) => ({
               ...g,
               guestsCount: g.guests.length,
             }))}
+          />
+          <GenderChart
+            data={await guestService.getGuestCountDividedByGender()}
           />
         </Container>
         <Container>

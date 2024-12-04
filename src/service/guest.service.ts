@@ -33,4 +33,23 @@ export const guestService = {
       guests,
     }));
   },
+  async getGuestCountDividedByGender() {
+    const guests = await db.query.people.findMany({
+      where: eq(people.type, "invitado"),
+    });
+
+    const genreMap: { [key: string]: number } = {};
+
+    for (const guest of guests) {
+      if (!genreMap[guest.genre]) {
+        genreMap[guest.genre] = 0;
+      }
+      genreMap[guest.genre] += 1;
+    }
+
+    return Object.entries(genreMap).map(([genre]) => ({
+      genre,
+      guestsCount: genreMap[genre],
+    }));
+  },
 };
