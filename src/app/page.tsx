@@ -1,10 +1,12 @@
 import { Container, Section } from "@/components/ui/craft";
 import { db } from "@/db";
 import { people } from "@/db/schemas";
+import { guestService } from "@/service/guest.service";
 import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
 import { BarChart } from "./BarChart";
 import PeopleTable from "./people-table";
+import { TotalGuestsChart } from "./TotalGuestsChart";
 
 export default async function RootPage() {
   const guests = await db.query.people.findMany({
@@ -45,7 +47,9 @@ export default async function RootPage() {
     }));
   };
 
-  console.log({ parsedGuests });
+  const guestsDividedByYears = await guestService.getAllGuestsDividedByYears();
+
+  console.log({ guestsDividedByYears });
 
   return (
     <>
@@ -59,9 +63,14 @@ export default async function RootPage() {
         <Container>
           <PeopleTable guests={parsedGuests} />
         </Container>
-        {/* <Container>
-          <TotalGuestsChart data={} />
-        </Container> */}
+        <Container>
+          <TotalGuestsChart
+            data={guestsDividedByYears.map((g) => ({
+              ...g,
+              guestsCount: g.guests.length,
+            }))}
+          />
+        </Container>
         <Container>
           <BarChart
             chartData={calculateChartData()

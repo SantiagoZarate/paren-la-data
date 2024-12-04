@@ -19,29 +19,28 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 
-const chartData = [
-  { browser: "chrome", visitors: 275, fill: "var(--color-chrome)" },
-  { browser: "safari", visitors: 200, fill: "var(--color-safari)" },
-  { browser: "firefox", visitors: 287, fill: "var(--color-firefox)" },
-];
-
 const chartConfig = {
   visitors: {
     label: "Visitors",
   },
-  chrome: {
-    label: "Chrome",
+  2022: {
+    label: "2022",
     color: "hsl(var(--chart-1))",
   },
-  safari: {
-    label: "Safari",
+  2023: {
+    label: "2023",
     color: "hsl(var(--chart-2))",
+  },
+  2024: {
+    label: "2024",
+    color: "hsl(var(--chart-3))",
   },
 } satisfies ChartConfig;
 
 type ChartData = {
-  year: number;
-  guests: number;
+  year: string;
+  guests: string[];
+  guestsCount: number;
 };
 
 interface Props {
@@ -50,8 +49,13 @@ interface Props {
 
 export function TotalGuestsChart({ data }: Props) {
   const totalVisitors = React.useMemo(() => {
-    return data.reduce((acc, curr) => acc + curr.guests, 0);
+    return data.reduce((acc, curr) => acc + curr.guestsCount, 0);
   }, [data]);
+
+  const chartData = data.map((d) => ({
+    ...d,
+    fill: `var(--color-${d.year})`,
+  }));
 
   return (
     <Card className="flex flex-col">
@@ -71,8 +75,8 @@ export function TotalGuestsChart({ data }: Props) {
             />
             <Pie
               data={chartData}
-              dataKey="visitors"
-              nameKey="browser"
+              dataKey="guestsCount"
+              nameKey="year"
               innerRadius={60}
               strokeWidth={5}
             >

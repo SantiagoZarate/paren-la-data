@@ -53,11 +53,14 @@ export const guestAppearance = sqliteTable("guest_appearance", {
   date: text("date").notNull(),
   peopleId: text("people_id")
     .notNull()
-    .references(() => people.id),
+    .references(() => people.id, { onDelete: "cascade" }),
+  // Hacer la migracion del cambio de cascada
 });
 
 export const peopleRelations = relations(people, ({ many }) => ({
-  appearances: many(guestAppearance),
+  appearances: many(guestAppearance, {
+    relationName: "peopleAppearances",
+  }),
   occupations: many(peopleToOccupations, {
     relationName: "peopleOccupations",
   }),
@@ -65,6 +68,17 @@ export const peopleRelations = relations(people, ({ many }) => ({
     relationName: "peopleTeams",
   }),
 }));
+
+export const guestAppearanceRelations = relations(
+  guestAppearance,
+  ({ one }) => ({
+    guest: one(people, {
+      fields: [guestAppearance.peopleId],
+      references: [people.id],
+      relationName: "peopleAppearances",
+    }),
+  })
+);
 
 export const occupation = sqliteTable("occupation", {
   name: text("name").primaryKey(),
