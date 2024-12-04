@@ -1,5 +1,6 @@
 "use client";
 
+import { convertToSlug } from "@/lib/convertToSlug";
 import { getCurrentAge } from "@/lib/getCurrentAge";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
 import {
@@ -14,6 +15,7 @@ import {
   TableRow,
 } from "@nextui-org/react";
 import { SearchIcon } from "lucide-react";
+import Image from "next/image";
 import React from "react";
 import { columns } from "./data";
 
@@ -79,12 +81,21 @@ export default function PeopleTable({ guests }: Props) {
           return <p>{String(age) === "NaN" ? "?" : age}</p>;
         case "teams":
           return (
-            <ul className="flex gap-1 list-none">
+            <ul className="flex gap-1 list-none items-center">
               {user.teams.map((team) => (
                 <li
-                  className="text-background px-2 py-1 rounded-lg bg-foreground w-fit text-xs"
+                  className="text-foreground px-2 py-1 rounded-lg w-fit text-xs border border-border bg-foreground-50 flex items-center gap-1"
                   key={team}
                 >
+                  {team !== "?" && (
+                    <Image
+                      alt="team logo"
+                      src={`/images/${convertToSlug(team)}.png`}
+                      width={8}
+                      height={8}
+                      className="w-4 m-0"
+                    />
+                  )}
                   {team}
                 </li>
               ))}
@@ -244,8 +255,9 @@ export default function PeopleTable({ guests }: Props) {
       classNames={{
         table: "m-0",
         thead: "border-none",
-        wrapper: "p-0 shadow-none",
-        td: "p-0 xl:p-0 m-0  *:m-2",
+        wrapper: "p-0 shadow-none bg-transparent",
+        td: "p-0 xl:p-0 m-0 *:m-2 px-2",
+        base: "",
       }}
     >
       <TableHeader columns={columns}>
