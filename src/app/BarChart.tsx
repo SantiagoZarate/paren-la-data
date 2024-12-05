@@ -25,6 +25,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { InfoIcon } from "lucide-react";
+import { parseAsString, useQueryState } from "nuqs";
 
 const chartConfig = {
   desktop: {
@@ -41,9 +42,15 @@ type ChartData = {
 interface Props {
   chartData: ChartData[];
   title: string;
+  queryKey: string;
 }
 
-export function BarChart({ chartData, title }: Props) {
+export function BarChart({ chartData, title, queryKey }: Props) {
+  const [_, setQueryState] = useQueryState(
+    "team",
+    parseAsString.withDefault("")
+  );
+
   return (
     <Card>
       <CardHeader>
@@ -75,8 +82,10 @@ export function BarChart({ chartData, title }: Props) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Bar
-              onClick={() => {
-                console.log("click");
+              onClick={(data) => {
+                // @ts-ignore
+                setQueryState(data.field);
+                console.log({ data });
               }}
               className="cursor-pointer"
               dataKey="guestsCount"

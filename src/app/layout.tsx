@@ -4,6 +4,7 @@ import { ThemeProvider } from "@/provider/ThemeProvider";
 import { NextUIProvider } from "@nextui-org/react";
 import type { Metadata } from "next";
 import localFont from "next/font/local";
+import { NuqsAdapter } from "nuqs/adapters/next/app";
 import "./globals.css";
 
 const geistSans = localFont({
@@ -36,10 +37,12 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <NextUIProvider>
-            <Header />
-            <Main>{children}</Main>
-          </NextUIProvider>
+          <NuqsAdapter>
+            <NextUIProvider>
+              <Header />
+              <Main>{children}</Main>
+            </NextUIProvider>
+          </NuqsAdapter>
         </ThemeProvider>
       </body>
     </Layout>

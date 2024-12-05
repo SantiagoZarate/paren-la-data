@@ -1,5 +1,6 @@
 "use client";
 
+import { Chip } from "@/components/ui/chip";
 import { convertToSlug } from "@/lib/convertToSlug";
 import { getCurrentAge } from "@/lib/getCurrentAge";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
@@ -83,10 +84,7 @@ export default function PeopleTable({ guests }: Props) {
           return (
             <ul className="flex gap-1 list-none items-center md:m-0">
               {user.teams.map((team) => (
-                <li
-                  className="text-foreground px-2 py-1 rounded-lg w-fit text-xs border border-border bg-foreground-50 flex items-center gap-1"
-                  key={team}
-                >
+                <Chip key={team}>
                   {team !== "?" && (
                     <Image
                       alt="team logo"
@@ -97,7 +95,15 @@ export default function PeopleTable({ guests }: Props) {
                     />
                   )}
                   {team}
-                </li>
+                </Chip>
+              ))}
+            </ul>
+          );
+        case "occupations":
+          return (
+            <ul className="flex gap-1 list-none items-center md:m-0">
+              {user.occupations.map((occ) => (
+                <Chip key={occ}>{occ}</Chip>
               ))}
             </ul>
           );
@@ -257,17 +263,11 @@ export default function PeopleTable({ guests }: Props) {
         thead: "border-none",
         wrapper: "p-0 shadow-none bg-transparent",
         td: "p-0 xl:p-0 m-0 *:m-2 px-2 !h-6",
-        tr: "",
-        base: "",
       }}
     >
       <TableHeader columns={columns}>
         {(column) => (
-          <TableColumn
-            key={column.uid}
-            align={column.uid === "actions" ? "center" : "start"}
-            allowsSorting={column.sortable}
-          >
+          <TableColumn key={column.uid} allowsSorting={column.sortable}>
             {column.name}
           </TableColumn>
         )}

@@ -40,6 +40,7 @@ export default async function RootPage() {
         </Container>
         <Container>
           <BarChart
+            queryKey="team"
             title="Cantidad de invitados por equipo | Top 10"
             chartData={guestsDividedByTeams.map((n) => ({
               field: n.name,
@@ -49,6 +50,7 @@ export default async function RootPage() {
         </Container>
         <Container>
           <BarChart
+            queryKey="occupation"
             title="Profesiones mas populares | Top 10"
             chartData={guestsDividedByOccupations.map((n) => ({
               field: n.name,
