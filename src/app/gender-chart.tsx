@@ -54,10 +54,7 @@ export function GenderChart({ data }: Props) {
               tickMargin={10}
               axisLine={false}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
+            <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
             <Bar dataKey="guestsCount" fill="var(--color-genre)" radius={8}>
               <LabelList
                 position="top"

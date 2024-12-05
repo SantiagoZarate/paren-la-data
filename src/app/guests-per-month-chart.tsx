@@ -17,7 +17,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { GuestPerMonth } from "@/lib/zod/guestsCountPerMonth";
 
 const chartConfig = {
   desktop: {
@@ -27,17 +26,28 @@ const chartConfig = {
 } satisfies ChartConfig;
 
 interface Props {
-  data: GuestPerMonth[];
+  data: {
+    key: string;
+    guestsCount: number;
+  }[];
+  title: string;
+  description: string;
+  shortLabel?: boolean;
 }
 
-export function GuestsPerMonthChart({ data }: Props) {
+export function GuestsPerMonthChart({
+  data,
+  title,
+  description,
+  shortLabel = true,
+}: Props) {
   return (
     <Card>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
-          <CalendarMiniIcon /> Invitados por meses
+          <CalendarMiniIcon /> {title}
         </CardTitle>
-        <CardDescription>January - June 2024</CardDescription>
+        <CardDescription>{description}</CardDescription>
       </CardHeader>
       <CardContent>
         <ChartContainer config={chartConfig}>
@@ -51,22 +61,27 @@ export function GuestsPerMonthChart({ data }: Props) {
           >
             <CartesianGrid vertical={false} />
             <XAxis
-              dataKey="month"
+              dataKey="key"
               tickLine={false}
               axisLine={false}
               tickMargin={8}
-              tickFormatter={(value) => value.slice(0, 3)}
+              tickFormatter={(value) => {
+                if (!shortLabel) return value;
+                return value.slice(0, 3);
+              }}
             />
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
+            <ChartTooltip content={<ChartTooltipContent indicator="line" />} />
             <Line
               dataKey="guestsCount"
               type="monotone"
               stroke="var(--color-desktop)"
               strokeWidth={2}
-              dot={false}
+              dot={{
+                fill: "var(--color-desktop)",
+              }}
+              activeDot={{
+                r: 6,
+              }}
             >
               <LabelList
                 position="top"

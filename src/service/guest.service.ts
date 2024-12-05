@@ -7,7 +7,7 @@ import { teamRepository } from "@/repository/team.repository";
 import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
 
-export const guestService = {
+class GuestService {
   async getAllGuestsDividedByYears() {
     const guests = await db.query.people.findMany({
       where: eq(people.type, "invitado"),
@@ -37,7 +37,8 @@ export const guestService = {
       year,
       guests,
     }));
-  },
+  }
+
   async getGuestCountDividedByGender() {
     const guests = await db.query.people.findMany({
       where: eq(people.type, "invitado"),
@@ -56,17 +57,19 @@ export const guestService = {
       genre,
       guestsCount: genreMap[genre],
     }));
-  },
+  }
+
   async getGuestsDividedByOccupation() {
     const topOccupations = await guestRepository.getTopByOccupation();
 
     return topOccupations;
-  },
+  }
+
   async getGuestsDividedByTeams() {
     const topTeams = await guestRepository.getTopByTeam();
 
     return topTeams;
-  },
+  }
 
   async getLatestGuests() {
     const guests = await guestRepository.getGuests({ take: 5 });
@@ -86,10 +89,15 @@ export const guestService = {
     return guestsWithMoreInfo.map((g) =>
       peopleTeamsOccupationsSchemaDTO.parse(g)
     );
-  },
+  }
+
   async getGuestsPerMonth(): Promise<GuestPerMonth[]> {
     const guests = await guestRepository.getGuestsCountPerMonth();
+
+    await this.getGuestsPerAgeRange();
+
     return [
+      // ADD 0 guests for january and febrary
       {
         guestsCount: 0,
         month: "Enero",
@@ -100,5 +108,60 @@ export const guestService = {
       },
       ...guests,
     ];
-  },
-};
+  }
+
+  async getGuestsPerAgeRange() {
+    const results = await guestRepository.getGuestsPerAge();
+
+    const guestsDividedByAgeRange: { [key: string]: number } = {
+      "18": 0,
+      "25": 0,
+      "30": 0,
+      "35": 0,
+      "40": 0,
+      "50": 0,
+      "60": 0,
+    };
+
+    results.forEach(({ age, guestsCount }) => {
+      // Menores de 25 años
+      if (age >= 18 && age < 25) {
+        guestsDividedByAgeRange["18"] += guestsCount;
+      }
+      if (age >= 25 && age < 30) {
+        guestsDividedByAgeRange["25"] += guestsCount;
+      }
+      if (age >= 30 && age < 35) {
+        guestsDividedByAgeRange["30"] += guestsCount;
+      }
+      if (age >= 35 && age < 40) {
+        guestsDividedByAgeRange["35"] += guestsCount;
+      }
+      if (age >= 40 && age < 50) {
+        guestsDividedByAgeRange["40"] += guestsCount;
+      }
+      if (age >= 50 && age < 60) {
+        guestsDividedByAgeRange["50"] += guestsCount;
+      }
+      if (age >= 60) {
+        guestsDividedByAgeRange["60"] += guestsCount;
+      }
+    });
+
+    const aux = Object.entries(guestsDividedByAgeRange).map(
+      ([range, guestsCount]) => ({
+        range: `> ${range} años`,
+        guestsCount,
+      })
+    );
+
+    aux.unshift({
+      guestsCount: 0,
+      range: "< 18",
+    });
+
+    return aux;
+  }
+}
+
+export const guestService = new GuestService();

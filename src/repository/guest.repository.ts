@@ -8,6 +8,7 @@ import {
   team,
 } from "@/db/schemas";
 import { guestsCountPerMonth } from "@/lib/zod/guestsCountPerMonth";
+import { guestsPerAge } from "@/lib/zod/guestsPerAge";
 import { desc, eq, sql } from "drizzle-orm";
 
 type GetOptions = {
@@ -73,6 +74,22 @@ class GuestRepository {
     const { rows } = await db.run(statement);
 
     return rows.map((r) => guestsCountPerMonth.parse(r));
+  }
+
+  async getGuestsPerAge() {
+    const statement = sql`
+    select strftime('%Y', 'now') - strftime('%Y', birth_date) AS age, COUNT(*) AS guests_count
+    from ${people}
+    WHERE birth_date IS NOT NULL 
+    AND LENGTH(birth_date) = 10 
+    AND birth_date LIKE '____-__-__'
+    GROUP BY age
+    ORDER BY age;
+    `;
+
+    const { rows } = await db.run(statement);
+
+    return rows.map((r) => guestsPerAge.parse(r));
   }
 }
 

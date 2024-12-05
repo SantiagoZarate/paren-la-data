@@ -20,6 +20,8 @@ export default async function RootPage() {
 
   const guestsPerMonth = await guestService.getGuestsPerMonth();
 
+  const guestsPerAgeRange = await guestService.getGuestsPerAgeRange();
+
   return (
     <>
       <Section className="border-b bg-foreground-100">
@@ -65,7 +67,25 @@ export default async function RootPage() {
           />
         </Container>
         <Container>
-          <GuestsPerMonthChart data={guestsPerMonth} />
+          <GuestsPerMonthChart
+            description="se tiene en cuenta todas las ediciones de PLM"
+            title="Invitados por mes"
+            data={guestsPerMonth.map((g) => ({
+              guestsCount: g.guestsCount,
+              key: g.month,
+            }))}
+          />
+        </Container>
+        <Container>
+          <GuestsPerMonthChart
+            title="Invitados por rango etario"
+            description="ej. Mayor de 18 menor de 25"
+            shortLabel={false}
+            data={guestsPerAgeRange.map((g) => ({
+              guestsCount: g.guestsCount,
+              key: g.range,
+            }))}
+          />
         </Container>
       </Section>
     </>

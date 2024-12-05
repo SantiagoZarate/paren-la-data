@@ -73,8 +73,8 @@ export function BarChart({ chartData, title, icon }: Props) {
               axisLine={false}
             />
             <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
+              cursor={true}
+              content={<ChartTooltipContent indicator="line" />}
             />
             <Bar
               dataKey="guestsCount"

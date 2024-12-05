@@ -3,7 +3,13 @@ import { reestructureDateToISO } from "../reestructureDateToISO";
 
 export const peopleSchema = z.object({
   name: z.string().trim(),
-  birthDate: z.string().trim(),
+  birthDate: z
+    .string()
+    .trim()
+    .transform((date) => {
+      if (date === "?") return true;
+      return reestructureDateToISO(date);
+    }),
   appearanceDate: z
     .string()
     .trim()

@@ -11,12 +11,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  ChartConfig,
-  ChartContainer,
-  ChartTooltip,
-  ChartTooltipContent,
-} from "@/components/ui/chart";
+import { ChartConfig, ChartContainer } from "@/components/ui/chart";
 
 const chartConfig = {
   visitors: {
@@ -68,10 +63,6 @@ export function TotalGuestsChart({ data }: Props) {
           className="mx-auto aspect-square max-h-[250px]"
         >
           <PieChart>
-            <ChartTooltip
-              cursor={false}
-              content={<ChartTooltipContent hideLabel />}
-            />
             <Pie
               data={chartData}
               dataKey="guestsCount"

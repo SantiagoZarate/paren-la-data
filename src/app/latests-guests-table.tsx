@@ -78,7 +78,7 @@ export default function LatestGuestsTable({ guests }: Props) {
       topContent={
         <header className="flex gap-2 items-center">
           <GroupMiniIcon />
-          <p>Ulitmos 5 invitados</p>
+          <p>Ultimos 5 invitados</p>
         </header>
       }
       bottomContent={
