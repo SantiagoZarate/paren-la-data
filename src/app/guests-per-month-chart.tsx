@@ -1,8 +1,8 @@
 "use client";
 
-import { TrendingUp } from "lucide-react";
 import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts";
 
+import { CalendarMiniIcon } from "@/components/icon/CalendarMiniIcon";
 import {
   Card,
   CardContent,
@@ -34,7 +34,9 @@ export function GuestsPerMonthChart({ data }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Invitados por meses</CardTitle>
+        <CardTitle className="flex items-center gap-2">
+          <CalendarMiniIcon /> Invitados por meses
+        </CardTitle>
         <CardDescription>January - June 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -77,11 +79,8 @@ export function GuestsPerMonthChart({ data }: Props) {
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="flex gap-2 font-medium leading-none">
-          Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
-        </div>
         <div className="leading-none text-muted-foreground">
-          Showing total visitors for the last 6 months
+          * No se transmiten programas en Enero y Febrero
         </div>
       </CardFooter>
     </Card>

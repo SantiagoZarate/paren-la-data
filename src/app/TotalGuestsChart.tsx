@@ -1,7 +1,7 @@
 "use client";
 
 import * as React from "react";
-import { Label, Pie, PieChart } from "recharts";
+import { Label, LabelList, Pie, PieChart } from "recharts";
 
 import {
   Card,
@@ -78,7 +78,32 @@ export function TotalGuestsChart({ data }: Props) {
               nameKey="year"
               innerRadius={60}
               strokeWidth={5}
+              labelLine={false}
+              label={({ payload, ...props }) => {
+                return (
+                  <text
+                    cx={props.cx}
+                    cy={props.cy}
+                    x={props.x}
+                    y={props.y}
+                    textAnchor={props.textAnchor}
+                    dominantBaseline={props.dominantBaseline}
+                    fill="hsla(var(--foreground))"
+                  >
+                    {payload.guestsCount}
+                  </text>
+                );
+              }}
             >
+              <LabelList
+                dataKey="year"
+                className="fill-background"
+                stroke="none"
+                fontSize={12}
+                formatter={(value: keyof typeof chartConfig) =>
+                  chartConfig[value]?.label
+                }
+              />
               <Label
                 content={({ viewBox }) => {
                   if (viewBox && "cx" in viewBox && "cy" in viewBox) {
@@ -101,7 +126,7 @@ export function TotalGuestsChart({ data }: Props) {
                           y={(viewBox.cy || 0) + 24}
                           className="fill-muted-foreground"
                         >
-                          Visitors
+                          Invitados
                         </tspan>
                       </text>
                     );

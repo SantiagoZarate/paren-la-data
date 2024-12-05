@@ -1,9 +1,11 @@
+import { BriefcaseMiniIcon } from "@/components/icon/BriefcaseMiniIcon";
+import { ShieldMiniIcon } from "@/components/icon/ShieldMiniIcon";
 import { Container, Section } from "@/components/ui/craft";
 import { guestService } from "@/service/guest.service";
 import { BarChart } from "./BarChart";
 import { GenderChart } from "./gender-chart";
 import { GuestsPerMonthChart } from "./guests-per-month-chart";
-import PeopleTable from "./people-table";
+import LatestGuestsTable from "./latests-guests-table";
 import { TotalGuestsChart } from "./TotalGuestsChart";
 
 export default async function RootPage() {
@@ -28,7 +30,8 @@ export default async function RootPage() {
       </Section>
       <Section>
         <Container>
-          <PeopleTable guests={latestsGuests} />
+          <LatestGuestsTable guests={latestsGuests} />
+          {/* <PeopleTable guests={latestsGuests} /> */}
         </Container>
         <Container className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
           <TotalGuestsChart
@@ -43,7 +46,7 @@ export default async function RootPage() {
         </Container>
         <Container>
           <BarChart
-            queryKey="team"
+            icon={<ShieldMiniIcon />}
             title="Cantidad de invitados por equipo | Top 10"
             chartData={guestsDividedByTeams.map((n) => ({
               field: n.name,
@@ -53,7 +56,7 @@ export default async function RootPage() {
         </Container>
         <Container>
           <BarChart
-            queryKey="occupation"
+            icon={<BriefcaseMiniIcon />}
             title="Profesiones mas populares | Top 10"
             chartData={guestsDividedByOccupations.map((n) => ({
               field: n.name,

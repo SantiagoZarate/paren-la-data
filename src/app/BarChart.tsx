@@ -14,7 +14,6 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
@@ -24,7 +23,6 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
-import { InfoIcon } from "lucide-react";
 
 const chartConfig = {
   desktop: {
@@ -41,14 +39,17 @@ type ChartData = {
 interface Props {
   chartData: ChartData[];
   title: string;
-  queryKey: string;
+  icon: JSX.Element;
 }
 
-export function BarChart({ chartData, title }: Props) {
+export function BarChart({ chartData, title, icon }: Props) {
   return (
     <Card>
       <CardHeader>
-        <CardTitle>{title}</CardTitle>
+        <CardTitle className="flex gap-2 items-center">
+          {icon}
+          {title}
+        </CardTitle>
         <CardDescription>2022 - 2024</CardDescription>
       </CardHeader>
       <CardContent>
@@ -76,7 +77,6 @@ export function BarChart({ chartData, title }: Props) {
               content={<ChartTooltipContent hideLabel />}
             />
             <Bar
-              className="cursor-pointer"
               dataKey="guestsCount"
               layout="vertical"
               fill="var(--color-desktop)"
@@ -93,13 +93,6 @@ export function BarChart({ chartData, title }: Props) {
           </RechartBarChart>
         </ChartContainer>
       </CardContent>
-      <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="leading-none text-muted-foreground flex items-center gap-2">
-          <InfoIcon className="w-4" />
-          Hacer click en la barra de cada equipo para abrir el listado de
-          invitados
-        </div>
-      </CardFooter>
     </Card>
   );
 }
