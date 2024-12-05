@@ -1,6 +1,9 @@
 import { db } from "@/db";
 import { people } from "@/db/schemas";
 import { guestRepository } from "@/repository/guest.repository";
+import { occupationRepository } from "@/repository/occupation.repository";
+import { teamRepository } from "@/repository/team.repository";
+import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
 
 export const guestService = {
@@ -62,5 +65,25 @@ export const guestService = {
     const topTeams = await guestRepository.getTopByTeam();
 
     return topTeams;
+  },
+
+  async getLatestGuests() {
+    const guests = await guestRepository.getGuests({ take: 5 });
+
+    const guestsWithMoreInfo = await Promise.all(
+      guests.map(async (g) => ({
+        ...g.people,
+        teams: (
+          await teamRepository.getTeamsByUser(g.people.id)
+        ).map((t) => t.team.name),
+        occupations: (
+          await occupationRepository.getOccupationsByUser(g.people.id)
+        ).map((o) => o.occupationName),
+      }))
+    );
+
+    return guestsWithMoreInfo.map((g) =>
+      peopleTeamsOccupationsSchemaDTO.parse(g)
+    );
   },
 };

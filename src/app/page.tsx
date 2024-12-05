@@ -1,32 +1,12 @@
 import { Container, Section } from "@/components/ui/craft";
-import { db } from "@/db";
-import { people } from "@/db/schemas";
 import { guestService } from "@/service/guest.service";
-import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
-import { eq } from "drizzle-orm";
 import { BarChart } from "./BarChart";
 import { GenderChart } from "./gender-chart";
 import PeopleTable from "./people-table";
 import { TotalGuestsChart } from "./TotalGuestsChart";
 
 export default async function RootPage() {
-  const guests = await db.query.people.findMany({
-    where: eq(people.type, "invitado"),
-    with: {
-      teams: true,
-      occupations: true,
-    },
-    limit: 50,
-    offset: 150,
-  });
-
-  const parsedGuests = guests.map((n) =>
-    peopleTeamsOccupationsSchemaDTO.parse({
-      ...n,
-      teams: n.teams.map((t) => t.teamName),
-      occupations: n.occupations.map((o) => o.occupationName),
-    })
-  );
+  const latestsGuests = await guestService.getLatestGuests();
 
   const guestsDividedByTeams = await guestService.getGuestsDividedByTeams();
 
@@ -45,7 +25,7 @@ export default async function RootPage() {
       </Section>
       <Section>
         <Container>
-          <PeopleTable guests={parsedGuests} />
+          <PeopleTable guests={latestsGuests} />
         </Container>
         <Container className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
           <TotalGuestsChart

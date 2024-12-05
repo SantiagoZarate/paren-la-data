@@ -1,14 +1,30 @@
 import { db } from "@/db";
 import {
+  guestAppearance,
   occupation,
   people,
   peopleToOccupations,
   peopleToTeams,
   team,
 } from "@/db/schemas";
-import { eq, sql } from "drizzle-orm";
+import { desc, eq, sql } from "drizzle-orm";
+
+type GetOptions = {
+  take?: number;
+};
 
 class GuestRepository {
+  async getGuests({ take = 300 }: GetOptions) {
+    const guests = await db
+      .select()
+      .from(people)
+      .innerJoin(guestAppearance, eq(people.id, guestAppearance.peopleId))
+      .orderBy(desc(guestAppearance.date)) // Order by date descending
+      .limit(take); // Limit to 5 rows
+
+    return guests;
+  }
+
   async getTopByTeam() {
     const topTeams = await db
       .select({

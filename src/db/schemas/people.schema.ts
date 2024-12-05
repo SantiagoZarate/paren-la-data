@@ -12,21 +12,25 @@ export const people = sqliteTable("people", {
     .$defaultFn(() => nanoid()),
   name: text("name").notNull(),
   birthDate: text("birth_date").notNull(),
-  location: text("location"),
-  country: text("country"),
-  type: text("type"),
+  location: text("location").notNull(),
+  country: text("country").notNull(),
+  type: text("type").notNull(),
   genre: text("genre").notNull(),
 });
 
 export const peopleToTeams = sqliteTable(
   "people_to_team",
   {
-    peopleId: text("people_id").references(() => people.id, {
-      onDelete: "cascade",
-    }),
-    teamName: text("team_name").references(() => team.name, {
-      onDelete: "cascade",
-    }),
+    peopleId: text("people_id")
+      .notNull()
+      .references(() => people.id, {
+        onDelete: "cascade",
+      }),
+    teamName: text("team_name")
+      .notNull()
+      .references(() => team.name, {
+        onDelete: "cascade",
+      }),
   },
   (t) => ({
     pk: primaryKey({ columns: [t.peopleId, t.teamName] }),
