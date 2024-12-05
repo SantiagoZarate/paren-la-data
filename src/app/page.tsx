@@ -28,26 +28,7 @@ export default async function RootPage() {
     })
   );
 
-  const calculateChartData = () => {
-    const teamMap: { [key: string]: string[] } = {};
-
-    // Iterate through guests
-    for (const guest of parsedGuests) {
-      for (const team of guest.teams) {
-        if (!teamMap[team]) {
-          teamMap[team] = []; // Initialize with an empty array if not already initialized
-        }
-        teamMap[team] = [...teamMap[team], guest.name];
-      }
-    }
-
-    // Convert teamMap to chartData array
-    return Object.entries(teamMap).map(([equipo, guests]) => ({
-      field: equipo,
-      guests,
-      guestsCount: guests.length,
-    }));
-  };
+  const guestsDividedByTeams = await guestService.getGuestsDividedByTeams();
 
   const guestsDividedByYears = await guestService.getAllGuestsDividedByYears();
 
@@ -80,22 +61,19 @@ export default async function RootPage() {
         <Container>
           <BarChart
             title="Cantidad de invitados por equipo | Top 10"
-            chartData={calculateChartData()
-              .sort((a, b) => b.guestsCount - a.guestsCount)
-              .slice(0, 10)}
+            chartData={guestsDividedByTeams.map((n) => ({
+              field: n.name,
+              guestsCount: n.total,
+            }))}
           />
         </Container>
         <Container>
           <BarChart
             title="Profesiones mas populares | Top 10"
-            chartData={guestsDividedByOccupations
-              .sort((a, b) => b.guests.length - a.guests.length)
-              .slice(0, 10)
-              .map((n) => ({
-                field: n.occupation,
-                guests: n.guests,
-                guestsCount: n.guests.length,
-              }))}
+            chartData={guestsDividedByOccupations.map((n) => ({
+              field: n.name,
+              guestsCount: n.total,
+            }))}
           />
         </Container>
       </Section>

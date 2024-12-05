@@ -54,32 +54,13 @@ export const guestService = {
     }));
   },
   async getGuestsDividedByOccupation() {
-    console.log(await guestRepository.getTopByTeam());
+    const topOccupations = await guestRepository.getTopByOccupation();
 
-    const guests = await db.query.people.findMany({
-      where: eq(people.type, "invitado"),
-      with: {
-        occupations: true,
-      },
-    });
+    return topOccupations;
+  },
+  async getGuestsDividedByTeams() {
+    const topTeams = await guestRepository.getTopByTeam();
 
-    const occupationsMap: { [key: string]: string[] } = {};
-
-    for (const guest of guests) {
-      for (const occupation of guest.occupations) {
-        if (!occupationsMap[occupation.occupationName]) {
-          occupationsMap[occupation.occupationName] = [];
-        }
-        occupationsMap[occupation.occupationName] = [
-          ...occupationsMap[occupation.occupationName],
-          guest.name,
-        ];
-      }
-    }
-
-    return Object.entries(occupationsMap).map(([occupation, guests]) => ({
-      occupation,
-      guests,
-    }));
+    return topTeams;
   },
 };

@@ -12,7 +12,7 @@ class GuestRepository {
   async getTopByTeam() {
     const topTeams = await db
       .select({
-        total: sql`COUNT(*) as total`,
+        total: sql<number>`COUNT(*) as total`,
         name: team.name,
       })
       .from(peopleToTeams)
@@ -29,7 +29,7 @@ class GuestRepository {
   async getTopByOccupation() {
     const topOccupations = await db
       .select({
-        total: sql`COUNT(*) as total`,
+        total: sql<number>`COUNT(*) as total`,
         name: occupation.name,
       })
       .from(peopleToOccupations)
