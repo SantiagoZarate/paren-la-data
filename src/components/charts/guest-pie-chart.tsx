@@ -4,7 +4,6 @@ import * as React from "react";
 import { Label, LabelList, Pie, PieChart } from "recharts";
 
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -17,6 +16,7 @@ import {
   ChartTooltipContent,
 } from "@/components/ui/chart";
 import { createChartConfigColors } from "@/lib/createChartConfigColors";
+import { MotionCard } from "../motion/motion-card";
 
 const chartConfig = {
   visitors: {
@@ -58,10 +58,8 @@ export function GuestPieChart({ data, title }: Props) {
 
   const colorsConfig = createChartConfigColors(data);
 
-  console.log({ colorsConfig });
-
   return (
-    <Card className="flex flex-col">
+    <MotionCard className="flex flex-col">
       <CardHeader className="items-center pb-0">
         <CardTitle>{title}</CardTitle>
         <CardDescription>2022 - 2024</CardDescription>
@@ -138,6 +136,6 @@ export function GuestPieChart({ data, title }: Props) {
           </PieChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+    </MotionCard>
   );
 }

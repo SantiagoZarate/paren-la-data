@@ -11,7 +11,6 @@ import {
 } from "recharts";
 
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -23,6 +22,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { MotionCard } from "../motion/motion-card";
 
 const chartConfig = {
   desktop: {
@@ -44,7 +44,7 @@ interface Props {
 
 export function BarChart({ chartData, title, icon }: Props) {
   return (
-    <Card>
+    <MotionCard>
       <CardHeader>
         <CardTitle className="flex gap-2 items-center">
           {icon}
@@ -93,6 +93,6 @@ export function BarChart({ chartData, title, icon }: Props) {
           </RechartBarChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+    </MotionCard>
   );
 }

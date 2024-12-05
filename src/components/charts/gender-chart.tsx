@@ -3,7 +3,6 @@
 import { Bar, BarChart, CartesianGrid, LabelList, XAxis } from "recharts";
 
 import {
-  Card,
   CardContent,
   CardDescription,
   CardHeader,
@@ -15,6 +14,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { MotionCard } from "../motion/motion-card";
 
 const chartConfig = {
   genre: {
@@ -32,7 +32,7 @@ interface Props {
 
 export function GenderChart({ data }: Props) {
   return (
-    <Card>
+    <MotionCard>
       <CardHeader>
         <CardTitle>Invitados por género</CardTitle>
         <CardDescription>January - June 2024</CardDescription>
@@ -65,6 +65,6 @@ export function GenderChart({ data }: Props) {
           </BarChart>
         </ChartContainer>
       </CardContent>
-    </Card>
+    </MotionCard>
   );
 }

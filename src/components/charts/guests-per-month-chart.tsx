@@ -4,7 +4,6 @@ import { CartesianGrid, LabelList, Line, LineChart, XAxis } from "recharts";
 
 import { CalendarMiniIcon } from "@/components/icon/CalendarMiniIcon";
 import {
-  Card,
   CardContent,
   CardDescription,
   CardFooter,
@@ -17,6 +16,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
 } from "@/components/ui/chart";
+import { MotionCard } from "../motion/motion-card";
 
 const chartConfig = {
   desktop: {
@@ -44,7 +44,7 @@ export function GuestsPerMonthChart({
   shortLabel = true,
 }: Props) {
   return (
-    <Card>
+    <MotionCard>
       <CardHeader>
         <CardTitle className="flex items-center gap-2">
           <CalendarMiniIcon /> {title}
@@ -98,6 +98,6 @@ export function GuestsPerMonthChart({
       <CardFooter className="flex-col items-start gap-2 text-sm">
         <div className="leading-none text-muted-foreground">{footer}</div>
       </CardFooter>
-    </Card>
+    </MotionCard>
   );
 }
