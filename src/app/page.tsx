@@ -6,7 +6,7 @@ import { BarChart } from "./BarChart";
 import { GenderChart } from "./gender-chart";
 import { GuestsPerMonthChart } from "./guests-per-month-chart";
 import LatestGuestsTable from "./latests-guests-table";
-import { TotalGuestsChart } from "./TotalGuestsChart";
+import { GuestPieChart } from "./TotalGuestsChart";
 
 export default async function RootPage() {
   const latestsGuests = await guestService.getLatestGuests();
@@ -22,6 +22,8 @@ export default async function RootPage() {
 
   const guestsPerAgeRange = await guestService.getGuestsPerAgeRange();
 
+  const guestsAbroad = await guestService.getInternationalGuests();
+
   return (
     <>
       <Section className="border-b bg-foreground-100">
@@ -33,12 +35,12 @@ export default async function RootPage() {
       <Section>
         <Container>
           <LatestGuestsTable guests={latestsGuests} />
-          {/* <PeopleTable guests={latestsGuests} /> */}
         </Container>
         <Container className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
-          <TotalGuestsChart
+          <GuestPieChart
+            title="Invitados por año"
             data={guestsDividedByYears.map((g) => ({
-              ...g,
+              key: g.year,
               guestsCount: g.guests.length,
             }))}
           />
@@ -68,6 +70,7 @@ export default async function RootPage() {
         </Container>
         <Container>
           <GuestsPerMonthChart
+            footer="* No se transmiten programas en Enero y Febrero"
             description="se tiene en cuenta todas las ediciones de PLM"
             title="Invitados por mes"
             data={guestsPerMonth.map((g) => ({
@@ -78,12 +81,22 @@ export default async function RootPage() {
         </Container>
         <Container>
           <GuestsPerMonthChart
+            footer="* Se calcula la edad actual, no la que tenian al momento de su primera participación"
             title="Invitados por rango etario"
             description="ej. Mayor de 18 menor de 25"
             shortLabel={false}
             data={guestsPerAgeRange.map((g) => ({
               guestsCount: g.guestsCount,
               key: g.range,
+            }))}
+          />
+        </Container>
+        <Container>
+          <GuestPieChart
+            title="Invitados nacidos afuera de Argentina"
+            data={guestsAbroad.map((g) => ({
+              key: g.country,
+              guestsCount: g.guests_count,
             }))}
           />
         </Container>

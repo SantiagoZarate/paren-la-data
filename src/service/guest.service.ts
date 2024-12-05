@@ -162,6 +162,11 @@ class GuestService {
 
     return aux;
   }
+
+  async getInternationalGuests() {
+    const guests = await guestRepository.getGuestsAbroad();
+    return guests;
+  }
 }
 
 export const guestService = new GuestService();

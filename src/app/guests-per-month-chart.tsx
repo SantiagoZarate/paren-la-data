@@ -33,12 +33,14 @@ interface Props {
   title: string;
   description: string;
   shortLabel?: boolean;
+  footer: string;
 }
 
 export function GuestsPerMonthChart({
   data,
   title,
   description,
+  footer,
   shortLabel = true,
 }: Props) {
   return (
@@ -94,9 +96,7 @@ export function GuestsPerMonthChart({
         </ChartContainer>
       </CardContent>
       <CardFooter className="flex-col items-start gap-2 text-sm">
-        <div className="leading-none text-muted-foreground">
-          * No se transmiten programas en Enero y Febrero
-        </div>
+        <div className="leading-none text-muted-foreground">{footer}</div>
       </CardFooter>
     </Card>
   );

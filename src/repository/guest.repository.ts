@@ -9,7 +9,7 @@ import {
 } from "@/db/schemas";
 import { guestsCountPerMonth } from "@/lib/zod/guestsCountPerMonth";
 import { guestsPerAge } from "@/lib/zod/guestsPerAge";
-import { desc, eq, sql } from "drizzle-orm";
+import { desc, eq, ne, sql } from "drizzle-orm";
 
 type GetOptions = {
   take?: number;
@@ -90,6 +90,19 @@ class GuestRepository {
     const { rows } = await db.run(statement);
 
     return rows.map((r) => guestsPerAge.parse(r));
+  }
+
+  async getGuestsAbroad() {
+    const results = await db
+      .select({
+        guests_count: sql<number>`COUNT(*) as total`,
+        country: people.country,
+      })
+      .from(people)
+      .where(ne(people.country, "Argentina"))
+      .groupBy(people.country);
+
+    return results;
   }
 }
 
