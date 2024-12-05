@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { people } from "@/db/schemas";
+import { guestRepository } from "@/repository/guest.repository";
 import { eq } from "drizzle-orm";
 
 export const guestService = {
@@ -50,6 +51,35 @@ export const guestService = {
     return Object.entries(genreMap).map(([genre]) => ({
       genre,
       guestsCount: genreMap[genre],
+    }));
+  },
+  async getGuestsDividedByOccupation() {
+    console.log(await guestRepository.getTopByTeam());
+
+    const guests = await db.query.people.findMany({
+      where: eq(people.type, "invitado"),
+      with: {
+        occupations: true,
+      },
+    });
+
+    const occupationsMap: { [key: string]: string[] } = {};
+
+    for (const guest of guests) {
+      for (const occupation of guest.occupations) {
+        if (!occupationsMap[occupation.occupationName]) {
+          occupationsMap[occupation.occupationName] = [];
+        }
+        occupationsMap[occupation.occupationName] = [
+          ...occupationsMap[occupation.occupationName],
+          guest.name,
+        ];
+      }
+    }
+
+    return Object.entries(occupationsMap).map(([occupation, guests]) => ({
+      occupation,
+      guests,
     }));
   },
 };

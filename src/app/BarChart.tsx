@@ -41,25 +41,26 @@ const chartConfig = {
   },
 } satisfies ChartConfig;
 
-type InvitadoTeam = {
-  equipo: string;
-  invitados: string[];
-  cantidad: number;
+type ChartData = {
+  field: string;
+  guests: string[];
+  guestsCount: number;
 };
 
 interface Props {
-  chartData: InvitadoTeam[];
+  chartData: ChartData[];
+  title: string;
 }
 
-export function BarChart({ chartData }: Props) {
+export function BarChart({ chartData, title }: Props) {
   const modalState = useDisclosure();
-  const [team, setTeam] = useState<InvitadoTeam | null>(null);
+  const [team, setTeam] = useState<ChartData | null>(null);
 
   return (
     <>
       <Card>
         <CardHeader>
-          <CardTitle>Cantidad de invitados por equipo | Top 10</CardTitle>
+          <CardTitle>{title}</CardTitle>
           <CardDescription>2022 - 2024</CardDescription>
         </CardHeader>
         <CardContent>
@@ -74,9 +75,9 @@ export function BarChart({ chartData }: Props) {
               barSize={10}
             >
               <CartesianGrid horizontal={false} />
-              <XAxis type="number" dataKey="cantidad" hide />
+              <XAxis type="number" dataKey="guestsCount" hide />
               <YAxis
-                dataKey="equipo"
+                dataKey="field"
                 type="category"
                 tickLine={false}
                 tickMargin={10}
@@ -91,21 +92,21 @@ export function BarChart({ chartData }: Props) {
                   modalState.onOpen();
                   setTeam({
                     // @ts-ignore
-                    cantidad: data.cantidad,
+                    guestsCount: data.guestsCount,
                     // @ts-ignore
-                    equipo: data.equipo,
+                    field: data.field,
                     // @ts-ignore
-                    invitados: data.invitados,
+                    guests: data.guests,
                   });
                 }}
                 className="cursor-pointer"
-                dataKey="cantidad"
+                dataKey="guestsCount"
                 layout="vertical"
                 fill="var(--color-desktop)"
                 radius={4}
               >
                 <LabelList
-                  dataKey="cantidad"
+                  dataKey="guestsCount"
                   position="right"
                   offset={8}
                   className="fill-foreground"
@@ -126,10 +127,10 @@ export function BarChart({ chartData }: Props) {
       <Modal {...modalState}>
         <ModalContent>
           <>
-            <ModalHeader>Hinchas de {team?.equipo}</ModalHeader>
+            <ModalHeader>Lista de invitados</ModalHeader>
             <ModalBody>
               <ul className="flex flex-col divide-y">
-                {team?.invitados.map((invitado) => (
+                {team?.guests.map((invitado) => (
                   <li className="text-sm py-2" key={invitado}>
                     {invitado}
                   </li>

@@ -24,6 +24,7 @@ export default async function RootPage() {
     peopleTeamsOccupationsSchemaDTO.parse({
       ...n,
       teams: n.teams.map((t) => t.teamName),
+      occupations: n.occupations.map((o) => o.occupationName),
     })
   );
 
@@ -41,16 +42,17 @@ export default async function RootPage() {
     }
 
     // Convert teamMap to chartData array
-    return Object.entries(teamMap).map(([equipo, invitados]) => ({
-      equipo,
-      invitados,
-      cantidad: invitados.length,
+    return Object.entries(teamMap).map(([equipo, guests]) => ({
+      field: equipo,
+      guests,
+      guestsCount: guests.length,
     }));
   };
 
   const guestsDividedByYears = await guestService.getAllGuestsDividedByYears();
 
-  console.log({ guestsDividedByYears });
+  const guestsDividedByOccupations =
+    await guestService.getGuestsDividedByOccupation();
 
   return (
     <>
@@ -77,9 +79,23 @@ export default async function RootPage() {
         </Container>
         <Container>
           <BarChart
+            title="Cantidad de invitados por equipo | Top 10"
             chartData={calculateChartData()
-              .sort((a, b) => b.invitados.length - a.invitados.length)
+              .sort((a, b) => b.guestsCount - a.guestsCount)
               .slice(0, 10)}
+          />
+        </Container>
+        <Container>
+          <BarChart
+            title="Profesiones mas populares | Top 10"
+            chartData={guestsDividedByOccupations
+              .sort((a, b) => b.guests.length - a.guests.length)
+              .slice(0, 10)
+              .map((n) => ({
+                field: n.occupation,
+                guests: n.guests,
+                guestsCount: n.guests.length,
+              }))}
           />
         </Container>
       </Section>

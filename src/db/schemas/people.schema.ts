@@ -1,6 +1,9 @@
 import { relations } from "drizzle-orm";
 import { primaryKey, sqliteTable, text } from "drizzle-orm/sqlite-core";
 import { nanoid } from "nanoid";
+import { guestAppearance } from "./appearance.schema";
+import { occupation } from "./occupation.schema";
+import { team } from "./team.schema";
 
 export const people = sqliteTable("people", {
   id: text("id")
@@ -13,10 +16,6 @@ export const people = sqliteTable("people", {
   country: text("country"),
   type: text("type"),
   genre: text("genre").notNull(),
-});
-
-export const team = sqliteTable("team", {
-  name: text("name").notNull().primaryKey(),
 });
 
 export const peopleToTeams = sqliteTable(
@@ -46,44 +45,15 @@ export const peopleToTeamsRelations = relations(peopleToTeams, ({ one }) => ({
   }),
 }));
 
-export const guestAppearance = sqliteTable("guest_appearance", {
-  id: text("id")
-    .primaryKey()
-    .notNull()
-    .$defaultFn(() => nanoid()),
-  date: text("date").notNull(),
-  peopleId: text("people_id")
-    .notNull()
-    .references(() => people.id, { onDelete: "cascade" }),
-  // Hacer la migracion del cambio de cascada
-});
-
 export const peopleRelations = relations(people, ({ many }) => ({
   appearances: many(guestAppearance, {
     relationName: "peopleAppearances",
   }),
-  occupations: many(peopleToOccupations, {
-    relationName: "peopleOccupations",
-  }),
+  occupations: many(peopleToOccupations),
   teams: many(peopleToTeams, {
     relationName: "peopleTeams",
   }),
 }));
-
-export const guestAppearanceRelations = relations(
-  guestAppearance,
-  ({ one }) => ({
-    guest: one(people, {
-      fields: [guestAppearance.peopleId],
-      references: [people.id],
-      relationName: "peopleAppearances",
-    }),
-  })
-);
-
-export const occupation = sqliteTable("occupation", {
-  name: text("name").primaryKey(),
-});
 
 export const peopleToOccupations = sqliteTable(
   "people_to_occupations",
@@ -109,7 +79,7 @@ export const peopleToOccupationsRelations = relations(
       relationName: "peopleTeams",
     }),
     occupation: one(occupation, {
-      fields: [peopleToOccupations.peopleId],
+      fields: [peopleToOccupations.occupationName],
       references: [occupation.name],
       relationName: "peopleOccupations",
     }),
