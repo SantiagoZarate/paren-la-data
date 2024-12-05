@@ -1,4 +1,4 @@
-import { ChartData } from "@/app/TotalGuestsChart";
+import { ChartData } from "@/components/charts/guest-pie-chart";
 import { ChartConfig } from "@/components/ui/chart";
 
 export function createChartConfigColors(data: ChartData[]): ChartConfig {

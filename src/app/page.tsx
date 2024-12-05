@@ -1,12 +1,12 @@
 import { BriefcaseMiniIcon } from "@/components/icon/BriefcaseMiniIcon";
 import { ShieldMiniIcon } from "@/components/icon/ShieldMiniIcon";
+import LatestGuestsTable from "@/components/tables/latests-guests-table";
 import { Container, Section } from "@/components/ui/craft";
 import { guestService } from "@/service/guest.service";
-import { BarChart } from "./BarChart";
-import { GenderChart } from "./gender-chart";
-import { GuestsPerMonthChart } from "./guests-per-month-chart";
-import LatestGuestsTable from "./latests-guests-table";
-import { GuestPieChart } from "./TotalGuestsChart";
+import { BarChart } from "../components/charts/BarChart";
+import { GenderChart } from "../components/charts/gender-chart";
+import { GuestPieChart } from "../components/charts/guest-pie-chart";
+import { GuestsPerMonthChart } from "../components/charts/guests-per-month-chart";
 
 export default async function RootPage() {
   const latestsGuests = await guestService.getLatestGuests();
