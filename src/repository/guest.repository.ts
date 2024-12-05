@@ -7,6 +7,7 @@ import {
   peopleToTeams,
   team,
 } from "@/db/schemas";
+import { guestsCountPerMonth } from "@/lib/zod/guestsCountPerMonth";
 import { desc, eq, sql } from "drizzle-orm";
 
 type GetOptions = {
@@ -59,6 +60,19 @@ class GuestRepository {
       .limit(10);
 
     return topOccupations;
+  }
+
+  async getGuestsCountPerMonth() {
+    const statement = sql`
+    select strftime('%m', date) AS month, COUNT(*) AS guest_count
+    from ${guestAppearance}
+    GROUP BY  strftime('%m', date)
+    ORDER BY month;
+    `;
+
+    const { rows } = await db.run(statement);
+
+    return rows.map((r) => guestsCountPerMonth.parse(r));
   }
 }
 

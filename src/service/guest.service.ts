@@ -1,5 +1,6 @@
 import { db } from "@/db";
 import { people } from "@/db/schemas";
+import { GuestPerMonth } from "@/lib/zod/guestsCountPerMonth";
 import { guestRepository } from "@/repository/guest.repository";
 import { occupationRepository } from "@/repository/occupation.repository";
 import { teamRepository } from "@/repository/team.repository";
@@ -85,5 +86,19 @@ export const guestService = {
     return guestsWithMoreInfo.map((g) =>
       peopleTeamsOccupationsSchemaDTO.parse(g)
     );
+  },
+  async getGuestsPerMonth(): Promise<GuestPerMonth[]> {
+    const guests = await guestRepository.getGuestsCountPerMonth();
+    return [
+      {
+        guestsCount: 0,
+        month: "Enero",
+      },
+      {
+        guestsCount: 0,
+        month: "Febrero",
+      },
+      ...guests,
+    ];
   },
 };

@@ -2,6 +2,7 @@ import { Container, Section } from "@/components/ui/craft";
 import { guestService } from "@/service/guest.service";
 import { BarChart } from "./BarChart";
 import { GenderChart } from "./gender-chart";
+import { GuestsPerMonthChart } from "./guests-per-month-chart";
 import PeopleTable from "./people-table";
 import { TotalGuestsChart } from "./TotalGuestsChart";
 
@@ -14,6 +15,8 @@ export default async function RootPage() {
 
   const guestsDividedByOccupations =
     await guestService.getGuestsDividedByOccupation();
+
+  const guestsPerMonth = await guestService.getGuestsPerMonth();
 
   return (
     <>
@@ -57,6 +60,9 @@ export default async function RootPage() {
               guestsCount: n.total,
             }))}
           />
+        </Container>
+        <Container>
+          <GuestsPerMonthChart data={guestsPerMonth} />
         </Container>
       </Section>
     </>
