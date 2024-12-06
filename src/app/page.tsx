@@ -28,12 +28,12 @@ export default async function RootPage() {
     <>
       <Section className="border-b bg-foreground-100">
         <Container className="pt-20 sm:pt-20">
-          <h1>Paren la data</h1>
+          <h1>Paren la Data</h1>
           <p>
-            Visualizacion de algunas estadisticas de los invitdaos de Paren la
-            mano, dataset de <a href="">@santipeluzzo</a>Siempre desde del
-            respeto
+            Visualizacion de algunas estadisticas de los invitados de Paren la
+            mano, dataset de <a href="">@santipeluzzo</a>
           </p>
+          <p className="text-muted-foreground">Siempre desde del respeto</p>
         </Container>
       </Section>
       <Section>

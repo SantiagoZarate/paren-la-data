@@ -37,7 +37,6 @@ export function DropdownTableSelect({ label, options, ...args }: Props) {
         {...args}
       >
         <>
-          <DropdownItem value={"all"}>-</DropdownItem>
           {options.map((option) => (
             <DropdownItem key={option} className="capitalize">
               {option}
