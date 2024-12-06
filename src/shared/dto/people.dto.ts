@@ -12,11 +12,31 @@ export const peopleSchemaDTO = z.object({
 
 export type PeopleDTO = z.infer<typeof peopleSchemaDTO>;
 
-export const peopleTeamsOccupationsSchemaDTO = peopleSchemaDTO.extend({
-  teams: z.array(z.string()),
-  occupations: z.array(z.string()),
-});
+export const peopleTeamsOccupationsAppearancesSchemaDTO = peopleSchemaDTO
+  .extend({
+    teams: z.array(
+      z.object({
+        teamName: z.string(),
+      })
+    ),
+    occupations: z.array(
+      z.object({
+        occupationName: z.string(),
+      })
+    ),
+    appearances: z.array(
+      z.object({
+        date: z.string(),
+      })
+    ),
+  })
+  .transform((shape) => ({
+    ...shape,
+    teams: shape.teams.map((t) => t.teamName),
+    occupations: shape.occupations.map((o) => o.occupationName),
+    appearances: shape.appearances.map((a) => a.date),
+  }));
 
 export type PeopleTeamsOccuparionsDTO = z.infer<
-  typeof peopleTeamsOccupationsSchemaDTO
+  typeof peopleTeamsOccupationsAppearancesSchemaDTO
 >;

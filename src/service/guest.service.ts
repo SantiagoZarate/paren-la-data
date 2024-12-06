@@ -4,7 +4,7 @@ import { GuestPerMonth } from "@/lib/zod/guestsCountPerMonth";
 import { guestRepository } from "@/repository/guest.repository";
 import { occupationRepository } from "@/repository/occupation.repository";
 import { teamRepository } from "@/repository/team.repository";
-import { peopleTeamsOccupationsSchemaDTO } from "@/shared/dto/people.dto";
+import { peopleTeamsOccupationsAppearancesSchemaDTO } from "@/shared/dto/people.dto";
 import { eq } from "drizzle-orm";
 
 class GuestService {
@@ -71,6 +71,13 @@ class GuestService {
     return topTeams;
   }
 
+  async getAll() {
+    const guests = await guestRepository.getAllGuests();
+    return guests.map((g) =>
+      peopleTeamsOccupationsAppearancesSchemaDTO.parse(g)
+    );
+  }
+
   async getLatestGuests() {
     const guests = await guestRepository.getGuests({ take: 5 });
 
@@ -83,12 +90,11 @@ class GuestService {
         occupations: (
           await occupationRepository.getOccupationsByUser(g.people.id)
         ).map((o) => o.occupationName),
+        appearances: [""],
       }))
     );
 
-    return guestsWithMoreInfo.map((g) =>
-      peopleTeamsOccupationsSchemaDTO.parse(g)
-    );
+    return guestsWithMoreInfo;
   }
 
   async getGuestsPerMonth(): Promise<GuestPerMonth[]> {

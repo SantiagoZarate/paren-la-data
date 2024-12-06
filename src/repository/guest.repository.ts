@@ -16,6 +16,34 @@ type GetOptions = {
 };
 
 class GuestRepository {
+  async getAllGuests() {
+    const guests = await db.query.people.findMany({
+      where: eq(people.type, "invitado"),
+      with: {
+        occupations: {
+          columns: {
+            peopleId: false,
+          },
+        },
+        teams: {
+          columns: {
+            peopleId: false,
+          },
+        },
+        appearances: {
+          orderBy: (guestAppearance, { asc }) => [asc(guestAppearance.date)],
+          limit: 1,
+          columns: {
+            peopleId: false,
+            id: false,
+          },
+        },
+      },
+    });
+
+    return guests;
+  }
+
   async getGuests({ take = 300 }: GetOptions) {
     const guests = await db
       .select()

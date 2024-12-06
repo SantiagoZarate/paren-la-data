@@ -6,8 +6,11 @@ import { getCurrentAge } from "@/lib/getCurrentAge";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
 import {
   Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
   Input,
-  Pagination,
   Table,
   TableBody,
   TableCell,
@@ -15,7 +18,7 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { SearchIcon } from "lucide-react";
+import { ChevronDownIcon, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { columns } from "./data";
@@ -27,12 +30,30 @@ interface Props {
 export default function PeopleTable({ guests }: Props) {
   const [filterValue, setFilterValue] = React.useState("");
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
-  const [rowsPerPage, setRowsPerPage] = React.useState(5);
+  const [selectedTeam, setSelectedTeam] = React.useState("all");
+  const [selectedOccupation, setSelectedOccupation] = React.useState("all");
+
+  const teams: string[] = [];
+  const occupations: string[] = [];
+
+  guests.forEach((g) => {
+    g.teams.forEach((t) => {
+      if (!teams.includes(t)) {
+        teams.push(t);
+      }
+    });
+
+    g.occupations.forEach((o) => {
+      if (!occupations.includes(o)) {
+        occupations.push(o);
+      }
+    });
+  });
+
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "age",
     direction: "ascending",
   });
-  const [page, setPage] = React.useState(1);
 
   const hasSearchFilter = Boolean(filterValue);
 
@@ -45,27 +66,32 @@ export default function PeopleTable({ guests }: Props) {
       );
     }
 
+    // Filtrar por equipo
+    if (selectedTeam !== "all") {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.teams.includes(selectedTeam)
+      );
+    }
+
+    // Filtrar por profesión
+    if (selectedOccupation !== "all") {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.occupations.includes(selectedOccupation)
+      );
+    }
+
     return filteredUsers;
-  }, [guests, hasSearchFilter, filterValue]);
-
-  const pages = Math.ceil(filteredItems.length / rowsPerPage);
-
-  const items = React.useMemo(() => {
-    const start = (page - 1) * rowsPerPage;
-    const end = start + rowsPerPage;
-
-    return filteredItems.slice(start, end);
-  }, [page, filteredItems, rowsPerPage]);
+  }, [guests, hasSearchFilter, selectedTeam, filterValue, selectedOccupation]);
 
   const sortedItems = React.useMemo(() => {
-    return [...items].sort((a, b) => {
+    return [...filteredItems].sort((a, b) => {
       const first = a[sortDescriptor.column];
       const second = b[sortDescriptor.column];
       const cmp = first < second ? -1 : first > second ? 1 : 0;
 
       return sortDescriptor.direction === "descending" ? -cmp : cmp;
     });
-  }, [sortDescriptor, items]);
+  }, [filteredItems, sortDescriptor.column, sortDescriptor.direction]);
 
   const renderCell = React.useCallback(
     (
@@ -82,7 +108,7 @@ export default function PeopleTable({ guests }: Props) {
           return <p>{String(age) === "NaN" ? "?" : age}</p>;
         case "teams":
           return (
-            <ul className="flex gap-1 list-none items-center md:m-0">
+            <div className="flex gap-1 list-none items-center md:m-0">
               {user.teams.map((team) => (
                 <Chip key={team}>
                   {team !== "?" && (
@@ -97,15 +123,15 @@ export default function PeopleTable({ guests }: Props) {
                   {team}
                 </Chip>
               ))}
-            </ul>
+            </div>
           );
         case "occupations":
           return (
-            <ul className="flex gap-1 list-none items-center md:m-0">
+            <div className="flex gap-1 list-none items-center md:m-0">
               {user.occupations.map((occ) => (
                 <Chip key={occ}>{occ}</Chip>
               ))}
-            </ul>
+            </div>
           );
         default:
           return cellValue;
@@ -114,30 +140,9 @@ export default function PeopleTable({ guests }: Props) {
     []
   );
 
-  const onNextPage = React.useCallback(() => {
-    if (page < pages) {
-      setPage(page + 1);
-    }
-  }, [page, pages]);
-
-  const onPreviousPage = React.useCallback(() => {
-    if (page > 1) {
-      setPage(page - 1);
-    }
-  }, [page]);
-
-  const onRowsPerPageChange = React.useCallback(
-    (e: React.ChangeEvent<HTMLSelectElement>) => {
-      setRowsPerPage(Number(e.target.value));
-      setPage(1);
-    },
-    []
-  );
-
   const onSearchChange = React.useCallback((value: string) => {
     if (value) {
       setFilterValue(value);
-      setPage(1);
     } else {
       setFilterValue("");
     }
@@ -145,7 +150,6 @@ export default function PeopleTable({ guests }: Props) {
 
   const onClear = React.useCallback(() => {
     setFilterValue("");
-    setPage(1);
   }, []);
 
   const topContent = React.useMemo(() => {
@@ -162,90 +166,113 @@ export default function PeopleTable({ guests }: Props) {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            {/* <Dropdown>
+            <Dropdown>
               <DropdownTrigger className="hidden sm:flex">
                 <Button
                   endContent={<ChevronDownIcon className="text-small" />}
                   variant="flat"
                 >
-                  Status
+                  Equipo
                 </Button>
               </DropdownTrigger>
               <DropdownMenu
-                disallowEmptySelection
+                disallowEmptySelection={true}
                 aria-label="Table Columns"
                 closeOnSelect={false}
-                selectionMode="multiple"
-                onSelectionChange={setStatusFilter}
+                classNames={{
+                  base: "overflow-y-auto",
+                  list: "overflow-y-auto max-h-[400px]",
+                }}
+                selectionMode="single"
+                onSelectionChange={(value) => {
+                  console.log({ value });
+                  if (value.currentKey) {
+                    setSelectedTeam(value.currentKey);
+                  }
+                }}
               >
-                {statusOptions.map((status) => (
-                  <DropdownItem key={status.uid} className="capitalize">
-                    {status}
-                  </DropdownItem>
-                ))}
+                <>
+                  <DropdownItem value={"all"}>-</DropdownItem>
+                  {teams.map((team) => (
+                    <DropdownItem key={team} className="capitalize">
+                      {team}
+                    </DropdownItem>
+                  ))}
+                </>
               </DropdownMenu>
-            </Dropdown> */}
+            </Dropdown>
+            <Dropdown>
+              <DropdownTrigger className="hidden sm:flex">
+                <Button
+                  endContent={<ChevronDownIcon className="text-small" />}
+                  variant="flat"
+                >
+                  Profesión
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu
+                disallowEmptySelection={true}
+                aria-label="Table Columns"
+                closeOnSelect={false}
+                classNames={{
+                  base: "overflow-y-auto",
+                  list: "overflow-y-auto max-h-[400px]",
+                }}
+                selectionMode="single"
+                onSelectionChange={(value) => {
+                  console.log({ value });
+                  if (value.currentKey) {
+                    setSelectedOccupation(value.currentKey);
+                  }
+                }}
+              >
+                <>
+                  <DropdownItem value={"all"}>-</DropdownItem>
+                  {occupations.map((occ) => (
+                    <DropdownItem key={occ} className="capitalize">
+                      {occ}
+                    </DropdownItem>
+                  ))}
+                </>
+              </DropdownMenu>
+            </Dropdown>
           </div>
         </div>
-        <div className="flex justify-between items-center">
+        <div className="flex gap-2 items-center">
           <span className="text-default-400 text-small">
             Total {guests.length} users
           </span>
-          <label className="flex items-center text-default-400 text-small">
-            Rows per page:
-            <select
-              className="bg-transparent outline-none text-default-400 text-small"
-              onChange={onRowsPerPageChange}
-            >
-              <option value="5">5</option>
-              <option value="10">10</option>
-              <option value="15">15</option>
-            </select>
-          </label>
+          {selectedTeam !== "all" && (
+            <button onClick={() => setSelectedTeam("all")}>
+              <Chip>{selectedTeam}</Chip>
+            </button>
+          )}
+          {selectedOccupation !== "all" && (
+            <button onClick={() => setSelectedOccupation("all")}>
+              <Chip>{selectedOccupation}</Chip>
+            </button>
+          )}
         </div>
       </div>
     );
   }, [
     filterValue,
     onSearchChange,
+    teams,
+    occupations,
     guests.length,
-    onRowsPerPageChange,
+    selectedTeam,
+    selectedOccupation,
     onClear,
   ]);
 
   const bottomContent = React.useMemo(() => {
     return (
       <div className="py-2 px-2 flex justify-between items-center">
-        <Pagination
-          isCompact
-          showControls
-          showShadow
-          color="primary"
-          page={page}
-          total={pages}
-          onChange={setPage}
-        />
-        <div className="hidden sm:flex w-[30%] justify-end gap-2">
-          <Button
-            isDisabled={pages === 1}
-            size="sm"
-            variant="flat"
-            onPress={onPreviousPage}
-          >
-            Previous
-          </Button>
-          <Button
-            isDisabled={pages === 1}
-            size="sm"
-            variant="flat"
-            onPress={onNextPage}
-          >
-            Next
-          </Button>
-        </div>
+        <div className="hidden sm:flex w-[30%] justify-end gap-2"></div>
       </div>
     );
-  }, [page, pages, onPreviousPage, onNextPage]);
+  }, []);
 
   return (
     <Table
@@ -253,15 +280,16 @@ export default function PeopleTable({ guests }: Props) {
       bottomContent={bottomContent}
       bottomContentPlacement="outside"
       selectedKeys={selectedKeys}
+      isHeaderSticky
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
       onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
       classNames={{
-        table: "m-0",
-        thead: "border-none",
-        wrapper: "p-0 shadow-none bg-transparent",
+        // table: "m-0",
+        // thead: "border-none",
+        // wrapper: "p-0 shadow-none bg-transparent",
         td: "p-0 xl:p-0 m-0 *:m-2 px-2 !h-6",
       }}
     >
@@ -276,7 +304,9 @@ export default function PeopleTable({ guests }: Props) {
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
-              <TableCell>{renderCell(item, columnKey)}</TableCell>
+              <TableCell>
+                {renderCell(item, columnKey as keyof PeopleTeamsOccuparionsDTO)}
+              </TableCell>
             )}
           </TableRow>
         )}
