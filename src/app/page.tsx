@@ -27,7 +27,7 @@ export default async function RootPage() {
   return (
     <>
       <Section className="border-b bg-foreground-100">
-        <Container className="sm:pt-20">
+        <Container className="pt-20 sm:pt-20">
           <h1>Paren la data</h1>
           <p>
             Visualizacion de algunas estadisticas de los invitdaos de Paren la

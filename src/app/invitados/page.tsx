@@ -7,7 +7,7 @@ export default async function InvitadosPage() {
 
   return (
     <Section>
-      <Container>
+      <Container className="pt-20">
         <PeopleTable
           guests={guests.map((g) => ({
             ...g,
