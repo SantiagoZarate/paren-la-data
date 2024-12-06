@@ -3,7 +3,7 @@ const columns = [
   { name: "Edad", uid: "birthDate", sortable: true },
   { name: "Hincha de", uid: "teams" },
   { name: "Profesión", uid: "occupations" },
-  { name: "Aparición", uid: "appearance" },
+  { name: "Aparición", uid: "appearance", sortable: true },
 ];
 
 export { columns };

@@ -6,11 +6,6 @@ import { getCurrentAge } from "@/lib/getCurrentAge";
 import { getTimeDifference } from "@/lib/getTimeDifference";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
 import {
-  Button,
-  Dropdown,
-  DropdownItem,
-  DropdownMenu,
-  DropdownTrigger,
   Input,
   Table,
   TableBody,
@@ -19,16 +14,14 @@ import {
   TableHeader,
   TableRow,
 } from "@nextui-org/react";
-import { ChevronDownIcon, SearchIcon } from "lucide-react";
+import { DeleteIcon, SearchIcon } from "lucide-react";
 import Image from "next/image";
 import React from "react";
 import { columns } from "./data";
+import { DropdownTableSelect } from "./dropdown-table-select";
 
 type Guest = Omit<PeopleTeamsOccuparionsDTO, "appearances"> & {
-  appearance: {
-    date: string;
-    year: string;
-  };
+  appearance: string;
 };
 
 interface Props {
@@ -40,6 +33,7 @@ export default function PeopleTable({ guests }: Props) {
   const [selectedKeys, setSelectedKeys] = React.useState(new Set([]));
   const [selectedTeam, setSelectedTeam] = React.useState("all");
   const [selectedOccupation, setSelectedOccupation] = React.useState("all");
+  const [selectedYear, setSelectedYear] = React.useState("all");
 
   const teams = React.useMemo(() => {
     const uniqueTeams: string[] = [];
@@ -95,8 +89,21 @@ export default function PeopleTable({ guests }: Props) {
       );
     }
 
+    if (selectedYear !== "all") {
+      filteredUsers = filteredUsers.filter(
+        (user) => user.appearance.slice(0, 4) === selectedYear
+      );
+    }
+
     return filteredUsers;
-  }, [guests, hasSearchFilter, selectedTeam, filterValue, selectedOccupation]);
+  }, [
+    guests,
+    hasSearchFilter,
+    selectedTeam,
+    selectedOccupation,
+    selectedYear,
+    filterValue,
+  ]);
 
   const sortedItems = React.useMemo(() => {
     return [...filteredItems].sort((a, b) => {
@@ -117,7 +124,7 @@ export default function PeopleTable({ guests }: Props) {
           return <p>{cellValue as string}</p>;
         case "birthDate":
           const age = getCurrentAge(cellValue as string);
-          return <p>{String(age) === "NaN" ? "?" : age}</p>;
+          return <span>{String(age) === "NaN" ? "?" : age}</span>;
         case "teams":
           return (
             <div className="flex gap-1 list-none items-center md:m-0">
@@ -147,10 +154,12 @@ export default function PeopleTable({ guests }: Props) {
           );
         case "appearance":
           return (
-            <div className="flex gap-1 list-none md:m-0 flex-col">
-              <p className="text-sm">{user.appearance.date}</p>
-              <p className="hidden sm:block text-xs text-muted-foreground">
-                {getTimeDifference(user.appearance.date)}
+            <div className="flex gap-1 list-none md:m-0 flex-col group">
+              <p className="text-sm group-hover:-translate-y-0 translate-y-2 transition">
+                {user.appearance}
+              </p>
+              <p className="hidden sm:block text-xs text-muted-foreground -translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition">
+                {getTimeDifference(user.appearance)}
               </p>
             </div>
           );
@@ -187,90 +196,61 @@ export default function PeopleTable({ guests }: Props) {
             onValueChange={onSearchChange}
           />
           <div className="flex gap-3">
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
-                  Equipo
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection={true}
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                classNames={{
-                  base: "overflow-y-auto",
-                  list: "overflow-y-auto max-h-[400px]",
-                }}
-                selectionMode="single"
-                onSelectionChange={(value) => {
-                  console.log({ value });
-                  if (value.currentKey) {
-                    setSelectedTeam(value.currentKey);
-                  }
-                }}
-              >
-                <>
-                  <DropdownItem value={"all"}>-</DropdownItem>
-                  {teams.map((team) => (
-                    <DropdownItem key={team} className="capitalize">
-                      {team}
-                    </DropdownItem>
-                  ))}
-                </>
-              </DropdownMenu>
-            </Dropdown>
-            <Dropdown>
-              <DropdownTrigger className="hidden sm:flex">
-                <Button
-                  endContent={<ChevronDownIcon className="text-small" />}
-                  variant="flat"
-                >
-                  Profesión
-                </Button>
-              </DropdownTrigger>
-              <DropdownMenu
-                disallowEmptySelection={true}
-                aria-label="Table Columns"
-                closeOnSelect={false}
-                classNames={{
-                  base: "overflow-y-auto",
-                  list: "overflow-y-auto max-h-[400px]",
-                }}
-                selectionMode="single"
-                onSelectionChange={(value) => {
-                  console.log({ value });
-                  if (value.currentKey) {
-                    setSelectedOccupation(value.currentKey);
-                  }
-                }}
-              >
-                <>
-                  <DropdownItem value={"all"}>-</DropdownItem>
-                  {occupations.map((occ) => (
-                    <DropdownItem key={occ} className="capitalize">
-                      {occ}
-                    </DropdownItem>
-                  ))}
-                </>
-              </DropdownMenu>
-            </Dropdown>
+            <DropdownTableSelect
+              label="Equipo"
+              options={teams}
+              onSelectionChange={(e) => {
+                if (e.currentKey) {
+                  setSelectedTeam(e.currentKey);
+                }
+              }}
+            />
+            <DropdownTableSelect
+              label="Edición"
+              options={["2022", "2023", "2024"]}
+              onSelectionChange={(e) => {
+                if (e.currentKey) {
+                  setSelectedYear(e.currentKey);
+                }
+              }}
+            />
+            <DropdownTableSelect
+              label="Profesión"
+              options={occupations}
+              onSelectionChange={(e) => {
+                if (e.currentKey) {
+                  setSelectedOccupation(e.currentKey);
+                }
+              }}
+            />
           </div>
         </div>
         <div className="flex gap-2 items-center">
           <span className="text-default-400 text-small">
-            Total {guests.length} users
+            Total {sortedItems.length} invitados
           </span>
           {selectedTeam !== "all" && (
             <button onClick={() => setSelectedTeam("all")}>
-              <Chip>{selectedTeam}</Chip>
+              <Chip>
+                {selectedTeam}
+                <DeleteIcon className="p-1" />
+              </Chip>
             </button>
           )}
           {selectedOccupation !== "all" && (
             <button onClick={() => setSelectedOccupation("all")}>
-              <Chip>{selectedOccupation}</Chip>
+              <Chip>
+                {selectedOccupation}
+                <DeleteIcon className="p-1" />
+              </Chip>
+            </button>
+          )}
+          {selectedYear !== "all" && (
+            <button onClick={() => setSelectedYear("all")}>
+              <Chip>
+                {selectedYear}
+                <DeleteIcon className="p-1" />
+              </Chip>
             </button>
           )}
         </div>
@@ -281,25 +261,16 @@ export default function PeopleTable({ guests }: Props) {
     onSearchChange,
     teams,
     occupations,
-    guests.length,
+    sortedItems.length,
     selectedTeam,
     selectedOccupation,
+    selectedYear,
     onClear,
   ]);
-
-  const bottomContent = React.useMemo(() => {
-    return (
-      <div className="py-2 px-2 flex justify-between items-center">
-        <div className="hidden sm:flex w-[30%] justify-end gap-2"></div>
-      </div>
-    );
-  }, []);
 
   return (
     <Table
       aria-label="Example table with custom cells, pagination and sorting"
-      bottomContent={bottomContent}
-      bottomContentPlacement="outside"
       selectedKeys={selectedKeys}
       isHeaderSticky
       sortDescriptor={sortDescriptor}
@@ -308,10 +279,8 @@ export default function PeopleTable({ guests }: Props) {
       onSelectionChange={setSelectedKeys}
       onSortChange={setSortDescriptor}
       classNames={{
-        // table: "m-0",
-        // thead: "border-none",
-        // wrapper: "p-0 shadow-none bg-transparent",
         td: "p-0 xl:p-0 m-0 *:m-2 px-2 !h-6",
+        tr: "hover:bg-muted",
       }}
     >
       <TableHeader columns={columns}>
@@ -325,9 +294,7 @@ export default function PeopleTable({ guests }: Props) {
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
-              <TableCell>
-                {renderCell(item, columnKey as keyof PeopleTeamsOccuparionsDTO)}
-              </TableCell>
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>
         )}

@@ -11,10 +11,7 @@ export default async function InvitadosPage() {
         <PeopleTable
           guests={guests.map((g) => ({
             ...g,
-            appearance: {
-              date: g.appearances[0],
-              year: g.appearances[0].slice(6),
-            },
+            appearance: g.appearances[0],
           }))}
         />
       </Container>
