@@ -5,7 +5,7 @@ export function Chip({ className, ...args }: ComponentProps<"div">) {
   return (
     <div
       className={cn(
-        "text-foreground px-2 py-1 rounded-lg w-fit text-xs border border-border bg-foreground-50 flex items-center gap-2",
+        "text-foreground justify-center px-2 py-1 rounded-lg w-fit text-xs border border-border bg-foreground-50 flex items-center gap-2",
         className
       )}
       {...args}

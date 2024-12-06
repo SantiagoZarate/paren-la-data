@@ -1,3 +1,4 @@
+import { DownloadIcon } from "@/components/icon/DownloadIcon";
 import { GithubIcon } from "@/components/icon/GithubIcon";
 import { Chip } from "@/components/ui/chip";
 import { Container, Section } from "@/components/ui/craft";
@@ -39,14 +40,23 @@ export function Footer() {
               </a>
             </p>
           </section>
-          <nav>
+          <nav className="flex flex-col gap-2">
             <a
               target="_blank"
               href="https://github.com/SantiagoZarate/paren-la-data"
             >
-              <Chip className="font-bold gap-1">
+              <Chip className="font-bold gap-1 w-full hover:bg-muted transition">
                 <GithubIcon />
                 Github
+              </Chip>
+            </a>
+            <a
+              download="personas-paren-la-mano.csv"
+              href="/csv/personas-paren-la-mano.csv"
+            >
+              <Chip className="font-bold gap-1 hover:bg-muted transition">
+                <DownloadIcon />
+                Descargar csv
               </Chip>
             </a>
           </nav>
