@@ -3,6 +3,7 @@
 import { Chip } from "@/components/ui/chip";
 import { convertToSlug } from "@/lib/convertToSlug";
 import { getCurrentAge } from "@/lib/getCurrentAge";
+import { getTimeDifference } from "@/lib/getTimeDifference";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
 import {
   Button,
@@ -23,8 +24,15 @@ import Image from "next/image";
 import React from "react";
 import { columns } from "./data";
 
+type Guest = Omit<PeopleTeamsOccuparionsDTO, "appearances"> & {
+  appearance: {
+    date: string;
+    year: string;
+  };
+};
+
 interface Props {
-  guests: PeopleTeamsOccuparionsDTO[];
+  guests: Guest[];
 }
 
 export default function PeopleTable({ guests }: Props) {
@@ -33,22 +41,29 @@ export default function PeopleTable({ guests }: Props) {
   const [selectedTeam, setSelectedTeam] = React.useState("all");
   const [selectedOccupation, setSelectedOccupation] = React.useState("all");
 
-  const teams: string[] = [];
-  const occupations: string[] = [];
-
-  guests.forEach((g) => {
-    g.teams.forEach((t) => {
-      if (!teams.includes(t)) {
-        teams.push(t);
-      }
+  const teams = React.useMemo(() => {
+    const uniqueTeams: string[] = [];
+    guests.forEach((g) => {
+      g.teams.forEach((t) => {
+        if (!uniqueTeams.includes(t)) {
+          uniqueTeams.push(t);
+        }
+      });
     });
+    return uniqueTeams;
+  }, [guests]);
 
-    g.occupations.forEach((o) => {
-      if (!occupations.includes(o)) {
-        occupations.push(o);
-      }
+  const occupations = React.useMemo(() => {
+    const uniqueOccupations: string[] = [];
+    guests.forEach((g) => {
+      g.occupations.forEach((o) => {
+        if (!uniqueOccupations.includes(o)) {
+          uniqueOccupations.push(o);
+        }
+      });
     });
-  });
+    return uniqueOccupations;
+  }, [guests]);
 
   const [sortDescriptor, setSortDescriptor] = React.useState({
     column: "age",
@@ -94,15 +109,12 @@ export default function PeopleTable({ guests }: Props) {
   }, [filteredItems, sortDescriptor.column, sortDescriptor.direction]);
 
   const renderCell = React.useCallback(
-    (
-      user: PeopleTeamsOccuparionsDTO,
-      columnKey: keyof PeopleTeamsOccuparionsDTO
-    ) => {
+    (user: Guest, columnKey: keyof Guest) => {
       const cellValue = user[columnKey];
 
       switch (columnKey) {
         case "name":
-          return <p>{cellValue}</p>;
+          return <p>{cellValue as string}</p>;
         case "birthDate":
           const age = getCurrentAge(cellValue as string);
           return <p>{String(age) === "NaN" ? "?" : age}</p>;
@@ -131,6 +143,15 @@ export default function PeopleTable({ guests }: Props) {
               {user.occupations.map((occ) => (
                 <Chip key={occ}>{occ}</Chip>
               ))}
+            </div>
+          );
+        case "appearance":
+          return (
+            <div className="flex gap-1 list-none md:m-0 flex-col">
+              <p className="text-sm">{user.appearance.date}</p>
+              <p className="hidden sm:block text-xs text-muted-foreground">
+                {getTimeDifference(user.appearance.date)}
+              </p>
             </div>
           );
         default:

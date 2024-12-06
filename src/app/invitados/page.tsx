@@ -8,7 +8,15 @@ export default async function InvitadosPage() {
   return (
     <Section>
       <Container>
-        <PeopleTable guests={guests} />
+        <PeopleTable
+          guests={guests.map((g) => ({
+            ...g,
+            appearance: {
+              date: g.appearances[0],
+              year: g.appearances[0].slice(6),
+            },
+          }))}
+        />
       </Container>
     </Section>
   );
