@@ -290,7 +290,10 @@ export default function PeopleTable({ guests }: Props) {
           </TableColumn>
         )}
       </TableHeader>
-      <TableBody emptyContent={"No users found"} items={sortedItems}>
+      <TableBody
+        emptyContent={"Ningún invitado cumple con los criterios de busqueda"}
+        items={sortedItems}
+      >
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (

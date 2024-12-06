@@ -1,3 +1,4 @@
+import { Footer } from "@/components/common/footer/footer";
 import { Header } from "@/components/common/header/header";
 import { Layout, Main } from "@/components/ui/craft";
 import { ThemeProvider } from "@/provider/ThemeProvider";
@@ -41,6 +42,7 @@ export default function RootLayout({
             <NextUIProvider>
               <Header />
               <Main>{children}</Main>
+              <Footer />
             </NextUIProvider>
           </NuqsAdapter>
         </ThemeProvider>
