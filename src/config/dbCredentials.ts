@@ -11,11 +11,7 @@ if (envs.mode === "production") {
   };
 } else {
   dbCredentials = {
-    url: `file:${path.resolve(
-      process.cwd(),
-      // `../../../../src/db/local.${envs.mode}.db`
-      `src/db/local.${envs.mode}.db`
-    )}`,
+    url: `file:${path.resolve(process.cwd(), `src/db/local.${envs.mode}.db`)}`,
   };
 }
 

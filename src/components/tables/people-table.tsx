@@ -64,8 +64,8 @@ export default function PeopleTable({ guests }: Props) {
     column: keyof Guest;
     direction: "ascending" | "descending";
   }>({
-    column: "birthDate",
-    direction: "ascending",
+    column: "appearance",
+    direction: "descending",
   });
 
   const hasSearchFilter = Boolean(filterValue);
