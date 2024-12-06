@@ -27,7 +27,7 @@ export default async function RootPage() {
   return (
     <>
       <Section className="border-b bg-foreground-100">
-        <Container>
+        <Container className="sm:pt-20">
           <h1>Paren la data</h1>
           <p>Siempre desde del respeto</p>
         </Container>

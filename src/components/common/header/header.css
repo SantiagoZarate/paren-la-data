@@ -1,0 +1,14 @@
+.header-wrapper {
+  animation: blurBackground linear both;
+  backdrop-filter: blur(0px);
+  animation-timeline: scroll();
+  animation-range: 0 500px;
+  border-bottom: 1px solid transparent;
+}
+
+@keyframes blurBackground {
+  to {
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+  }
+}
