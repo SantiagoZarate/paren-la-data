@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // craft-ds, v0.2.8
 // This is a design system for building responsive layouts in React
 

@@ -120,9 +120,9 @@ export default function LatestGuestsTable({ guests }: Props) {
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
-              <TableCell>
-                {renderCell(item, columnKey as keyof PeopleTeamsOccuparionsDTO)}
-              </TableCell>
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              // @ts-expect-error
+              <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>
         )}

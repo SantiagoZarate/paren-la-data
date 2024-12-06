@@ -9,7 +9,9 @@
     "lint": "next lint",
     "db:seed": "tsx ./src/db/seed/seed.ts",
     "db:generate": "drizzle-kit generate",
-    "db:migrate": "drizzle-kit migrate"
+    "db:migrate": "drizzle-kit migrate",
+    "db:seed:production": "NODE_ENV=production tsx ./src/db/seed/seed.ts",
+    "db:migrate:production": "NODE_ENV=production drizzle-kit migrate"
   },
   "dependencies": {
     "@libsql/client": "0.14.0",

@@ -7,7 +7,7 @@ export const peopleSchema = z.object({
     .string()
     .trim()
     .transform((date) => {
-      if (date === "?") return true;
+      if (date === "?") return "?";
       return reestructureDateToISO(date);
     }),
   appearanceDate: z

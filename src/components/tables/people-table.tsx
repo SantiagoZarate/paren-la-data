@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-ts-comment */
 "use client";
 
 import { Chip } from "@/components/ui/chip";
@@ -59,8 +60,11 @@ export default function PeopleTable({ guests }: Props) {
     return uniqueOccupations;
   }, [guests]);
 
-  const [sortDescriptor, setSortDescriptor] = React.useState({
-    column: "age",
+  const [sortDescriptor, setSortDescriptor] = React.useState<{
+    column: keyof Guest;
+    direction: "ascending" | "descending";
+  }>({
+    column: "birthDate",
     direction: "ascending",
   });
 
@@ -276,7 +280,9 @@ export default function PeopleTable({ guests }: Props) {
       sortDescriptor={sortDescriptor}
       topContent={topContent}
       topContentPlacement="outside"
+      // @ts-ignore
       onSelectionChange={setSelectedKeys}
+      // @ts-ignore
       onSortChange={setSortDescriptor}
       classNames={{
         td: "p-0 xl:p-0 m-0 *:m-2 px-2 !h-6",
@@ -297,6 +303,7 @@ export default function PeopleTable({ guests }: Props) {
         {(item) => (
           <TableRow key={item.id}>
             {(columnKey) => (
+              // @ts-ignore
               <TableCell>{renderCell(item, columnKey)}</TableCell>
             )}
           </TableRow>

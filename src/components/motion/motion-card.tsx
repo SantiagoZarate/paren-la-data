@@ -2,7 +2,7 @@
 
 import { cn } from "@nextui-org/react";
 import { HTMLMotionProps, Variants, motion, useInView } from "framer-motion";
-import React, { useRef } from "react";
+import { useRef } from "react";
 
 type CardProps = HTMLMotionProps<"div">;
 
@@ -24,28 +24,23 @@ const cardVariants: Variants = {
   }),
 };
 
-const MotionCard = React.forwardRef<HTMLDivElement, CardProps>(
-  ({ className, ...props }, ref) => {
-    const cardRef = useRef<HTMLDivElement | null>(null);
-    const isInView = useInView(cardRef, {
-      once: true,
-    });
+export function MotionCard({ className, ...props }: CardProps) {
+  const cardRef = useRef<HTMLDivElement | null>(null);
+  const isInView = useInView(cardRef, {
+    once: true,
+  });
 
-    return (
-      <motion.div
-        animate={isInView ? "visible" : "hidden"}
-        variants={cardVariants}
-        initial="hidden"
-        ref={cardRef}
-        className={cn(
-          "rounded-xl border bg-card text-card-foreground shadow",
-          className
-        )}
-        {...props}
-      />
-    );
-  }
-);
-MotionCard.displayName = "MotionCard";
-
-export { MotionCard };
+  return (
+    <motion.div
+      animate={isInView ? "visible" : "hidden"}
+      variants={cardVariants}
+      initial="hidden"
+      ref={cardRef}
+      className={cn(
+        "rounded-xl border bg-card text-card-foreground shadow",
+        className
+      )}
+      {...props}
+    />
+  );
+}

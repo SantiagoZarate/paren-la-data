@@ -21,6 +21,7 @@ export async function parseGuest(url: string) {
         appearanceDate,
         genre,
         birthDate,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _age,
         occupations,
         location,
@@ -66,6 +67,7 @@ export async function parseStaff(url: string) {
         name,
         birthDate,
         genre,
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         _age,
         occupations,
         location,

@@ -30,8 +30,6 @@ async function seed() {
   const allTeams = allGuests.flatMap((guest) => guest.teams);
   const uniqueTeams = Array.from(new Set(allTeams)); // Remove duplicates
 
-  console.log({ uniqueTeams });
-
   // Collect all occupations
   const allOccupations = [...allGuests, ...frecuentes].flatMap(
     (guest) => guest.occupations
