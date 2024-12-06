@@ -4,6 +4,7 @@ import { GroupMiniIcon } from "@/components/icon/GroupMiniIcon";
 import { Chip } from "@/components/ui/chip";
 import { convertToSlug } from "@/lib/convertToSlug";
 import { getCurrentAge } from "@/lib/getCurrentAge";
+import { getTimeDifference } from "@/lib/getTimeDifference";
 import { PeopleTeamsOccuparionsDTO } from "@/shared/dto/people.dto";
 import {
   Table,
@@ -18,16 +19,17 @@ import Link from "next/link";
 import React from "react";
 import { columns } from "./data";
 
+type Guest = Omit<PeopleTeamsOccuparionsDTO, "appearances"> & {
+  appearance: string;
+};
+
 interface Props {
-  guests: PeopleTeamsOccuparionsDTO[];
+  guests: Guest[];
 }
 
 export default function LatestGuestsTable({ guests }: Props) {
   const renderCell = React.useCallback(
-    (
-      user: PeopleTeamsOccuparionsDTO,
-      columnKey: keyof PeopleTeamsOccuparionsDTO
-    ) => {
+    (user: Guest, columnKey: keyof Guest) => {
       const cellValue = user[columnKey];
 
       switch (columnKey) {
@@ -63,6 +65,17 @@ export default function LatestGuestsTable({ guests }: Props) {
               ))}
             </div>
           );
+        case "appearance":
+          return (
+            <div className="flex gap-1 list-none md:m-0 flex-col group">
+              <p className="text-sm group-hover:-translate-y-0 translate-y-2 transition">
+                {user.appearance}
+              </p>
+              <p className="hidden sm:block text-xs text-muted-foreground -translate-y-2 group-hover:translate-y-0 opacity-0 group-hover:opacity-100 transition">
+                {getTimeDifference(user.appearance)}
+              </p>
+            </div>
+          );
         default:
           return cellValue;
       }
@@ -79,6 +92,9 @@ export default function LatestGuestsTable({ guests }: Props) {
         <header className="flex gap-2 items-center">
           <GroupMiniIcon />
           <p>Ultimos 5 invitados</p>
+          <span className="text-xs text-muted-foreground">
+            (Sin repetir aparaciones)
+          </span>
         </header>
       }
       bottomContent={

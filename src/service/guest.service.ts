@@ -73,6 +73,7 @@ class GuestService {
 
   async getAll() {
     const guests = await guestRepository.getAllGuests();
+
     return guests.map((g) =>
       peopleTeamsOccupationsAppearancesSchemaDTO.parse(g)
     );
@@ -90,7 +91,7 @@ class GuestService {
         occupations: (
           await occupationRepository.getOccupationsByUser(g.people.id)
         ).map((o) => o.occupationName),
-        appearances: [""],
+        appearances: [g.guest_appearance.date],
       }))
     );
 

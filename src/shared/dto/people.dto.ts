@@ -1,4 +1,3 @@
-import { PEOPLE_TYPE } from "@/data/constants";
 import { z } from "zod";
 
 export const peopleSchemaDTO = z.object({
@@ -7,7 +6,7 @@ export const peopleSchemaDTO = z.object({
   id: z.string(),
   location: z.string(),
   name: z.string(),
-  type: z.enum(PEOPLE_TYPE),
+  type: z.string(),
 });
 
 export type PeopleDTO = z.infer<typeof peopleSchemaDTO>;

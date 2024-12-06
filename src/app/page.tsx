@@ -34,7 +34,12 @@ export default async function RootPage() {
       </Section>
       <Section>
         <Container>
-          <LatestGuestsTable guests={latestsGuests} />
+          <LatestGuestsTable
+            guests={latestsGuests.map((g) => ({
+              ...g,
+              appearance: g.appearances[0],
+            }))}
+          />
         </Container>
         <Container className="grid grid-cols-[repeat(auto-fit,minmax(300px,1fr))] gap-6">
           <GuestPieChart
