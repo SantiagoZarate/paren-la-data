@@ -20,10 +20,13 @@ export function getTimeDifference(newDate: string) {
 
   if (years === 0) {
     if (months === 0) {
-      return `hace ${days} dias`;
+      if (days === 1) {
+        return `hace ${days} día`;
+      }
+      return `hace ${days} días`;
     }
     if (months === 1) {
-      return `hace ${months} mes y ${days} dias`;
+      return `hace ${months} mes y ${days} días`;
     }
     return `hace ${months} meses`;
   }
