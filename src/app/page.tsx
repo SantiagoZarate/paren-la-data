@@ -31,7 +31,10 @@ export default async function RootPage() {
           <h1>Paren la Data</h1>
           <p>
             Visualizacion de algunas estadisticas de los invitados de Paren la
-            mano, dataset de <a href="">@santipeluzzo</a>
+            mano, dataset de{" "}
+            <a href="https://x.com/santipeluzzo" target="_blank">
+              @santipeluzzo
+            </a>
           </p>
           <p className="text-muted-foreground">Siempre desde del respeto</p>
         </Container>
