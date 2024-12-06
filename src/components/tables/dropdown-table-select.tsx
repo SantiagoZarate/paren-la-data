@@ -17,7 +17,7 @@ interface Props {
 export function DropdownTableSelect({ label, options, ...args }: Props) {
   return (
     <Dropdown>
-      <DropdownTrigger className="hidden sm:flex">
+      <DropdownTrigger className="flex">
         <Button
           endContent={<ChevronDownIcon className="text-small" />}
           variant="flat"
